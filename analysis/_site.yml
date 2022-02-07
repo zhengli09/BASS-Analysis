@@ -1,7 +1,7 @@
-name: "BASS-analysis"
+name: BASS-analysis
 output_dir: ../docs
 navbar:
-  title: "BASS-analysis"
+  title: BASS-analysis
   left:
   - text: Home
     href: index.html
@@ -9,6 +9,10 @@ navbar:
     href: about.html
   - text: License
     href: license.html
+  right:
+  - icon: fa-github
+    text: Source code
+    href: https://github.com/zhengli09/BASS-analysis
 output:
   workflowr::wflow_html:
     toc: yes

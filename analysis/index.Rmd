@@ -28,7 +28,7 @@ sections/samples, facilitating the integration of spatial transcriptomic data
 across tissue samples.
 
 ## BASS workflow
-![](../docs/BASS_workflow.png)
+![](BASS_workflow.png)
 
 ## BASS Model overview
 BASS relies on a Bayesian hierarchical modeling framework that describes the 

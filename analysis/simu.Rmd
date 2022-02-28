@@ -8,9 +8,9 @@ output:
 editor_options:
   chunk_output_type: console
 ---
-[simulation]: https://github.com/zhengli09/BASS-Analysis/tree/main/code/
-[params]: https://github.com/zhengli09/BASS-Analysis/tree/main/data/params.txt
-[visualization]: https://github.com/zhengli09/BASS-Analysis/tree/main/code/viz.R
+[simulation]: https://github.com/zhengli09/BASS-Analysis/tree/master/code/
+[params]: https://github.com/zhengli09/BASS-Analysis/tree/master/data/params.txt
+[visualization]: https://github.com/zhengli09/BASS-Analysis/tree/master/code/viz.R
 
 
 # Introduction

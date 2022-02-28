@@ -364,8 +364,8 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/zhengli09//BASS-analysis">
-    <span class="fa fa-github"></span>
+  <a href="https://github.com/zhengli09/BASS-analysis">
+    <span class="fab fa-github"></span>
      
     Source code
   </a>
@@ -497,16 +497,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree4ec8df1262087c7c78f682e56014a7087a756d4ftargetblank4ec8df1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zhengli09//BASS-analysis/tree/4ec8df1262087c7c78f682e56014a7087a756d4f" target="_blank">4ec8df1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistreeada7b84d38930e62d40ec33e901390ceb4a2b81ftargetblankada7b84a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zhengli09/BASS-analysis/tree/ada7b84d38930e62d40ec33e901390ceb4a2b81f" target="_blank">ada7b84</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree4ec8df1262087c7c78f682e56014a7087a756d4ftargetblank4ec8df1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistreeada7b84d38930e62d40ec33e901390ceb4a2b81ftargetblankada7b84a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zhengli09//BASS-analysis/tree/4ec8df1262087c7c78f682e56014a7087a756d4f" target="_blank">4ec8df1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zhengli09/BASS-analysis/tree/ada7b84d38930e62d40ec33e901390ceb4a2b81f" target="_blank">ada7b84</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -555,7 +555,41 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/zhengli09//BASS-analysis/blob/4ec8df1262087c7c78f682e56014a7087a756d4f/analysis/simu.Rmd" target="_blank">4ec8df1</a>
+<a href="https://github.com/zhengli09/BASS-analysis/blob/ada7b84d38930e62d40ec33e901390ceb4a2b81f/analysis/simu.Rmd" target="_blank">ada7b84</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-02-27
+</td>
+<td>
+Modify links
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zhengli09/BASS-analysis/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/simu.html" target="_blank">9a68511</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-02-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zhengli09/BASS-analysis/blob/4ec8df1262087c7c78f682e56014a7087a756d4f/analysis/simu.Rmd" target="_blank">4ec8df1</a>
 </td>
 <td>
 zhengli09
@@ -582,7 +616,7 @@ Publish the introduction, simulation analysis and STARmap analysis
 <h1>Simulation study</h1>
 <div id="generate-simulated-data" class="section level2">
 <h2>Generate simulated data</h2>
-<p>The simulation study relies on a few R packages and python softwares (e.g. SpaGCN and FICT), which need to be installed beforehand. The specific packages and all necessary functions to conduct the simulation study can be found at <a href="https://github.com/zhengli09/BASS-Analysis/tree/main/code/">simulation</a>.</p>
+<p>The simulation study relies on a few R packages and python softwares (e.g. SpaGCN and FICT), which need to be installed beforehand. The specific packages and all necessary functions to conduct the simulation study can be found at <a href="https://github.com/zhengli09/BASS-Analysis/tree/master/code/">simulation</a>.</p>
 <pre class="r"><code>source(&quot;code/simu_utils.R&quot;)
 # data for inferring parameters for splatter
 load(&quot;data/starmap_mpfc.RData&quot;) # starmap_cnts, starmap_info
@@ -596,7 +630,7 @@ starmap &lt;- list(cnts = cnts, info = info)
 NREP &lt;- 50
 set.seed(0)
 seeds &lt;- sample(20201230, NREP)</code></pre>
-<p>We generate the simulated data under the baseline simulation setting. Refer to the <a href="https://github.com/zhengli09/BASS-Analysis/tree/main/data/params.txt">params</a> file for a complete list of simulation settings.</p>
+<p>We generate the simulated data under the baseline simulation setting. Refer to the <a href="https://github.com/zhengli09/BASS-Analysis/tree/master/data/params.txt">params</a> file for a complete list of simulation settings.</p>
 <pre class="r"><code># baseline settings for all four scenarios for the 
 # single tissue section analysis (L = 1)
 scenarios &lt;- 1:4 # simulation scenarios
@@ -630,7 +664,7 @@ Gene5     0     0     0     2     0</code></pre>
 </div>
 <div id="visualize-of-the-simulated-data" class="section level2">
 <h2>Visualize of the simulated data</h2>
-<p>We visualize the cell type distributions under scenarios I-IV. You can refer to <a href="https://github.com/zhengli09/BASS-Analysis/tree/main/code/viz.R">visualization</a> for some useful plotting functions or you can write your own code for plotting.</p>
+<p>We visualize the cell type distributions under scenarios I-IV. You can refer to <a href="https://github.com/zhengli09/BASS-Analysis/tree/master/code/viz.R">visualization</a> for some useful plotting functions or you can write your own code for plotting.</p>
 <pre class="r"><code>library(cowplot)
 source(&quot;code/viz.R&quot;)
 p &lt;- lapply(scenarios, function(scenario){
@@ -643,10 +677,47 @@ legend &lt;- get_legend(p[[1]] +
 p &lt;- plot_grid(plotlist = p, ncol = 2)
 plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1))</code></pre>
 <p><img src="figure/simu.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zhengli09/BASS-analysis/blob/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/figure/simu.Rmd/unnamed-chunk-4-1.png" target="_blank">9a68511</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-02-27
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="running-all-methods" class="section level2">
 <h2>Running all methods</h2>
-<p>We have wrapped up code for running different methods into different functions. Those functions take in simulated data and output adjusted random index (ARI) measuring the estimate cell type or spatial domain labels with the underlying truth. Functions for running different methods can be found at <a href="https://github.com/zhengli09/BASS-Analysis/tree/main/code/">simulation</a>. We take the simulated data from scenario 3 as an example to illustrate running different methods.</p>
+<p>We have wrapped up code for running different methods into different functions. Those functions take in simulated data and output adjusted random index (ARI) measuring the estimate cell type or spatial domain labels with the underlying truth. Functions for running different methods can be found at <a href="https://github.com/zhengli09/BASS-Analysis/tree/master/code/">simulation</a>. We take the simulated data from scenario 3 as an example to illustrate running different methods.</p>
 <pre class="r"><code>scenario &lt;- 3</code></pre>
 <div id="run-bass" class="section level3">
 <h3>Run BASS</h3>
@@ -671,7 +742,7 @@ plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1))</code></pre>
     ......................................................................................
     . Method                         Time (sec)           Status                         . 
     ......................................................................................
-    . ECR-ITERATIVE-1                17.565               Converged (3 iterations)       . 
+    . ECR-ITERATIVE-1                17.481               Converged (3 iterations)       . 
     ......................................................................................
 
     Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
@@ -680,12 +751,12 @@ plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1))</code></pre>
     Retrieve the 1 best clusterings: [...]$clusters
     Retrieve the 1 CPU times: [...]$timings
     Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 19.3 seconds. 
+    Label switching finished. Total time: 19.1 seconds. 
 
     ......................................................................................
     . Method                         Time (sec)           Status                         . 
     ......................................................................................
-    . ECR-ITERATIVE-1                10.228               Converged (2 iterations)       . 
+    . ECR-ITERATIVE-1                10.205               Converged (2 iterations)       . 
     ......................................................................................
 
     Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
@@ -737,13 +808,13 @@ Consider to install these (optional) packages to run all possible Giotto command
 # spatial interaction parameter betas.
 HMRF_out</code></pre>
 <pre><code>      0.0       2.0       4.0       6.0       8.0      10.0      12.0      14.0 
-0.1508578 0.1508578 0.1576335 0.1648563 0.2533123 0.3469621 0.4017072 0.4408313 
+0.1508578 0.1508578 0.1576335 0.1648563 0.2533123 0.3601968 0.4037333 0.4220421 
      16.0      18.0      20.0      22.0      24.0      26.0      28.0      30.0 
-0.4852844 0.4525879 0.4848594 0.5345169 0.5860648 0.6032793 0.6169157 0.6420285 
+0.4942260 0.4725915 0.5156322 0.5522958 0.5351690 0.5768655 0.6255737 0.5726423 
      32.0      34.0      36.0      38.0      40.0      42.0      44.0      46.0 
-0.6339821 0.5739655 0.5729992 0.5880543 0.6063979 0.6116954 0.6033891 0.5984740 
+0.5815424 0.5794783 0.5912112 0.5985681 0.6235051 0.6552240 0.6506761 0.6563171 
      48.0      50.0 
-0.5886572 0.5886572 </code></pre>
+0.6426422 0.6458700 </code></pre>
 </div>
 <div id="run-bayesspace" class="section level3">
 <h3>Run BayesSpace</h3>
@@ -759,7 +830,7 @@ BayesSpace_out</code></pre>
 </div>
 <div id="run-spagcn" class="section level3">
 <h3>Run SpaGCN</h3>
-<p>Because SpaGCN was originally developed with Python, we wrapped up the code into a function and have it imported into R such that we can conveniently analyze the simulated data in R. The python function can be found at <a href="https://github.com/zhengli09/BASS-Analysis/tree/main/code/">simulation</a>.</p>
+<p>Because SpaGCN was originally developed with Python, we wrapped up the code into a function and have it imported into R such that we can conveniently analyze the simulated data in R. The python function can be found at <a href="https://github.com/zhengli09/BASS-Analysis/tree/master/code/">simulation</a>.</p>
 <pre class="r"><code># Run SpaGCN
 source_python(&quot;code/run_SpaGCN.py&quot;)
 SpaGCN_out &lt;- run_SpaGCN(sim_dat, xy, info$z, R)

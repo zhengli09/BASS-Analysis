@@ -1,11 +1,60 @@
 ---
-title: "Home"
+title: "Introduction to BASS"
+author: "Zheng Li"
+date: "2022-02-06"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
-    toc: false
+    toc: true
 editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
+# Welcome to the BASS website!
+This website maintains code for reproducing simulation and real data
+application results described in the upcoming paper.For the software, 
+please to refer to [BASS](https://github.com/zhengli09/BASS). 
+
+# Introduction to BASS
+BASS is a method for multi-scale and multi-sample analysis in spatial 
+transcriptomics. BASS performs multi-scale transcriptomic analyses in the form 
+of joint cell type clustering and spatial domain detection, with the two 
+analytic tasks carried out simultaneously within a Bayesian hierarchical 
+modeling framework. For both analyses, BASS properly accounts for the spatial 
+correlation structure and seamlessly integrates gene expression information 
+with spatial localization information to improve their performance. In addition, 
+BASS is capable of multi-sample analysis that jointly models multiple tissue 
+sections/samples, facilitating the integration of spatial transcriptomic data 
+across tissue samples.
+
+## BASS workflow
+![](../docs/BASS_workflow.png)
+
+## BASS Model overview
+BASS relies on a Bayesian hierarchical modeling framework that describes the 
+relationship among gene expression features, cell type labels, spatial domain 
+labels, cell type compositions, and neighborhood graphs in a hierarchical 
+fashion:
+$$
+  \boldsymbol{x}_i^{(l)} | c_i^{(l)} = c \sim MVN(\boldsymbol{\mu}_c, \boldsymbol{\Sigma}) 
+$$
+$$
+  c_i^{(l)} | z_i^{(l)} = r \sim Cat(\boldsymbol{\pi}_r)
+$$
+$$
+  \boldsymbol{z}^{(l)} \sim Potts(V^{(l)}, \beta)
+$$
+Above, the first equation models the expression feature of the $i$th cell on 
+section $l$, $\boldsymbol{x}_i^{(l)}$, as depending on its cell type label 
+$c_i^{(l)}$ with a multivariate normal distribution parameterized by a cell 
+type-specific mean parameter $\boldsymbol{\mu}_c$ and a variance-covariance 
+matrix $\boldsymbol{\Sigma}$. The second equation models the probability of the 
+$i$th cell belonging to the cell type $c$ as depending on the underlying spatial 
+domain with a categorical distribution parameterized by the $r$ domain-specific 
+cell type composition vector $\boldsymbol{\pi}_r$. The third equation models the 
+spatial domain label of all cells on the section $l$, $\boldsymbol{z}^{(l)}$, as 
+a function of the neighoborhood graph $V^{(l)}$ through a homogeneous Potts model 
+characterized by an interaction parameter $\beta$.
+
+
+

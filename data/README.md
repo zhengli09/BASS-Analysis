@@ -1,3 +1,3 @@
 # Data
 
-Save raw data files here.
+Save data files here.

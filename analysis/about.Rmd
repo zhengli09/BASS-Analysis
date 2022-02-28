@@ -1,10 +1,30 @@
 ---
-title: "About"
+title: "Software tutorial"
+author: "Zheng Li"
+date: "2022-02-06"
 output:
   workflowr::wflow_html:
-    toc: false
+    toc: true
 editor_options:
   chunk_output_type: console
 ---
+# Introduction
+In this tutorial, we introduce core functions and workflow of BASS to help you 
+get familiar with the BASS package and start analyzing your own datasets. 
+Please check out the `Real data analyses` sections for 
 
-Describe your project.
+# Installation
+Install BASS R package maintained in [github](https://github.com/zhengli09/BASS) 
+through the "devtools" package.
+```{r eval = FALSE}
+if(!require(devtools))
+  install.packages(devtools)
+devtools::install_github("zhengli09/BASS")
+```
+```{r}
+library(BASS)
+```
+
+# Introduction to BASS package
+
+# Core functions

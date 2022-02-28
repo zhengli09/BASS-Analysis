@@ -105,7 +105,7 @@ levels(clabels_l) <- cTypes
 
 ## Visualization
 You can refer to 
-[visualization](https://github.com/zhengli09/BASS-Analysis/tree/main/code/viz.R) 
+[visualization](https://github.com/zhengli09/BASS-Analysis/tree/master/code/viz.R) 
 for some useful plotting functions or you can write your own code for plotting.
 ```{r}
 library(ggplot2)

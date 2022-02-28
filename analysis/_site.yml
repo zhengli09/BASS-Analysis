@@ -22,7 +22,7 @@ navbar:
   right:
   - icon: fab fa-github
     text: Source code
-    href: https://github.com//BASS-analysis
+    href: https://github.com/zhengli09/BASS-analysis
 output:
   workflowr::wflow_html:
     toc: yes

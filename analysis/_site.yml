@@ -1,28 +1,28 @@
 name: BASS-analysis
 output_dir: ../docs
 navbar:
-  title: "BASS"
+  title: BASS
   left:
-  - text: "Introduction"
+  - text: Introduction
     href: index.html
-  - text: "Software tutorial"
+  - text: Software tutorial
     href: about.html
-  - text: "Simulation"
+  - text: Simulation
     href: simu.html
-  - text: "Real data analyses"
+  - text: Real data analyses
     menu:
-    - text: "STARmap (Wang et al., 2018)"
+    - text: STARmap (Wang et al., 2018)
       href: STARmap.html
-    - text: "MERFISH (Moffitt et al., 2018)"
+    - text: MERFISH (Moffitt et al., 2018)
       href: MERFISH.html
-    - text: "DLPFC (Maynard et al., 2021)"
+    - text: DLPFC (Maynard et al., 2021)
       href: DLPFC.html
-  - text: "License"
+  - text: License
     href: license.html
   right:
-  - icon: fa-github
+  - icon: fab fa-github
     text: Source code
-    href: https://github.com/zhengli09//BASS-analysis
+    href: https://github.com//BASS-analysis
 output:
   workflowr::wflow_html:
     toc: yes

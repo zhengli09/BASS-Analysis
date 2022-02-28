@@ -497,16 +497,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistreeada7b84d38930e62d40ec33e901390ceb4a2b81ftargetblankada7b84a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zhengli09/BASS-analysis/tree/ada7b84d38930e62d40ec33e901390ceb4a2b81f" target="_blank">ada7b84</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree9044081553486614c1ecfa4909655b16758e83d5targetblank9044081a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zhengli09/BASS-analysis/tree/9044081553486614c1ecfa4909655b16758e83d5" target="_blank">9044081</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistreeada7b84d38930e62d40ec33e901390ceb4a2b81ftargetblankada7b84a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree9044081553486614c1ecfa4909655b16758e83d5targetblank9044081a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zhengli09/BASS-analysis/tree/ada7b84d38930e62d40ec33e901390ceb4a2b81f" target="_blank">ada7b84</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zhengli09/BASS-analysis/tree/9044081553486614c1ecfa4909655b16758e83d5" target="_blank">9044081</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -550,6 +550,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zhengli09/BASS-analysis/blob/9044081553486614c1ecfa4909655b16758e83d5/analysis/STARmap.Rmd" target="_blank">9044081</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-02-27
+</td>
+<td>
+Modify links in STARmap.Rmd
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zhengli09/BASS-analysis/a27dd42cad44fadeffe07751ac770d859d28a83f/docs/STARmap.html" target="_blank">a27dd42</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-02-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -681,7 +715,7 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     ......................................................................................
     . Method                         Time (sec)           Status                         . 
     ......................................................................................
-    . ECR-ITERATIVE-1                58.359               Converged (3 iterations)       . 
+    . ECR-ITERATIVE-1                59.587               Converged (3 iterations)       . 
     ......................................................................................
 
     Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
@@ -690,12 +724,12 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     Retrieve the 1 best clusterings: [...]$clusters
     Retrieve the 1 CPU times: [...]$timings
     Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 61.9 seconds. 
+    Label switching finished. Total time: 63.5 seconds. 
 
     ......................................................................................
     . Method                         Time (sec)           Status                         . 
     ......................................................................................
-    . ECR-ITERATIVE-1                21.128               Converged (2 iterations)       . 
+    . ECR-ITERATIVE-1                21.849               Converged (2 iterations)       . 
     ......................................................................................
 
     Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
@@ -704,7 +738,7 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     Retrieve the 1 best clusterings: [...]$clusters
     Retrieve the 1 CPU times: [...]$timings
     Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 22.8 seconds. </code></pre>
+    Label switching finished. Total time: 23.5 seconds. </code></pre>
 <pre class="r"><code>clabels &lt;- BASS@res_postprocess$c_ls # cell type clusters
 zlabels &lt;- BASS@res_postprocess$z_ls # spatial domain labels
 pi_est &lt;- BASS@res_postprocess$pi_ls # cell type composition matrix</code></pre>
@@ -746,7 +780,7 @@ levels(clabels_l) &lt;- cTypes</code></pre>
 </div>
 <div id="visualization" class="section level2">
 <h2>Visualization</h2>
-<p>You can refer to <a href="https://github.com/zhengli09/BASS-Analysis/tree/main/code/viz.R">visualization</a> for some useful plotting functions or you can write your own code for plotting.</p>
+<p>You can refer to <a href="https://github.com/zhengli09/BASS-Analysis/tree/master/code/viz.R">visualization</a> for some useful plotting functions or you can write your own code for plotting.</p>
 <pre class="r"><code>library(ggplot2)
 source(&quot;code/viz.R&quot;)
 # Spatial domains
@@ -938,7 +972,7 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     ......................................................................................
     . Method                         Time (sec)           Status                         . 
     ......................................................................................
-    . ECR-ITERATIVE-1                118.714              Converged (3 iterations)       . 
+    . ECR-ITERATIVE-1                122.238              Converged (3 iterations)       . 
     ......................................................................................
 
     Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
@@ -947,12 +981,12 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     Retrieve the 1 best clusterings: [...]$clusters
     Retrieve the 1 CPU times: [...]$timings
     Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 126.3 seconds. 
+    Label switching finished. Total time: 129.9 seconds. 
 
     ......................................................................................
     . Method                         Time (sec)           Status                         . 
     ......................................................................................
-    . ECR-ITERATIVE-1                52.13                Converged (2 iterations)       . 
+    . ECR-ITERATIVE-1                54.866               Converged (2 iterations)       . 
     ......................................................................................
 
     Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
@@ -961,7 +995,7 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     Retrieve the 1 best clusterings: [...]$clusters
     Retrieve the 1 CPU times: [...]$timings
     Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 58.6 seconds. </code></pre>
+    Label switching finished. Total time: 61.4 seconds. </code></pre>
 <pre class="r"><code>clabels &lt;- BASS@res_postprocess$c_ls # cell type clusters
 zlabels &lt;- BASS@res_postprocess$z_ls # spatial domain labels
 pi_est &lt;- BASS@res_postprocess$pi_ls # cell type composition matrix</code></pre>

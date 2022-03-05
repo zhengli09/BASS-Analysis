@@ -1,0 +1,160 @@
+---
+title: "DLPFC (Maynard et al., 2021)"
+author: "Zheng Li"
+date: "2022-02-24"
+output: 
+  workflowr::wflow_htlm:
+    toc: true
+editor_options:
+  chunk_output_type: console
+---
+
+# Introduction
+Here, we apply BASS to analyze the DLPFC (human dorsolateral prefrontal cortex) 
+dataset from 
+[Maynard et al., 2021](https://www.nature.com/articles/s41593-020-00787-0). 
+DLPFC data contains expression values of 33,538 genes measured on two pairs of 
+tissue sections from three independent neurotypical adult donors. Each pair 
+consisted of two directly adjacent, 10  $\mu m$ serial tissue sections with the 
+second pair located 300 $\mu m$ posterior to the first, resulting in a total of 
+12 tissue sections. The original data can be downloaded from 
+[here](https://github.com/LieberInstitute/spatialLIBD). We excluded spots that 
+are not mapped to the tissue region in the histology image and retained a total 
+of 33,538 genes measured on 4,226 (151507), 4,384 (151508), 4,789 (151509), 
+4,634 (151510), 3,661 (151669), 3,498 (151670), 4,110 (151671), 4,015 (151672), 
+3,639 (151673), 3,673 (151674), 3,592 (151675), and 3,460 (151676) spots along 
+with their spatial locations for further analysis. The processed data can be 
+download from the 
+[data directory](https://github.com/zhengli09/BASS-Analysis/tree/master/data). 
+We focused our analysis only on spatial domain detection because the clustering 
+of spatial spots no longer has the cell type interpretation. For single-sample 
+analysis, we analyzed each of the 12 tissue sections separately. For multi-sample 
+analysis, we jointly analyzed four tissue sections from each adult donor because 
+they contain similar tissue structures. 
+
+```{r error=FALSE,message=FALSE}
+library(BASS)
+# cntm: a list of expression count matrices for 12 tissue sections
+# infom: a list of manually annotated labels of seven laminar 
+#        clusters by the original study for 12 tissue sections
+# xym: a list of spatial coordinates for 12 tissue sections 
+load("data/spatialLIBD.RData")
+
+# hyper-parameters
+# We set the number of cell types to a relatively large
+# number (20) to capture the expression heterogeneity.
+C <- 20
+ # number of spatial domains
+R <- 7
+```
+
+# Single-sample analysis
+## Run BASS
+```{r}
+smp <- "151673"
+set.seed(0)
+# Set up BASS object
+BASS <- createBASSObject(cntm[smp], xym[smp], C = C, R = R,
+  beta_est_approach = "ACCUR_EST", init_method = "mclust",
+  burn_in = 10000, samples = 10000)
+
+# Data pre-processing:
+# 1.Library size normalization followed with a log2 transformation
+# 2.Select top 3000 spatially expressed genes with SPARK-X
+# 3.Dimension reduction with PCA
+BASS <- BASS.preprocess(BASS, doLogNormalize = TRUE,
+  geneSelect = "sparkx", nSE = 3000,
+  doPCA = TRUE, scaleFeature = FALSE, nPC = 20)
+
+# Run BASS algorithm
+BASS <- BASS.run(BASS)
+```
+
+```{r message = FALSE, warning = FALSE}
+# post-process posterior samples:
+# 1.Adjust for label switching with the ECR-1 algorithm
+# 2.Summarize the posterior samples to obtain the spatial domain labels
+BASS <- BASS.postprocess(BASS)
+zlabels <- BASS@res_postprocess$z_ls # spatial domain labels
+```
+
+## Visualization
+You can refer to 
+[visualization](https://github.com/zhengli09/BASS-Analysis/tree/master/code/viz.R) 
+for some useful plotting functions or you can write your own code for plotting.
+```{r fig.height=4, fig.width=4}
+library(ggplot2)
+source("code/viz.R")
+# Spatial domains
+zlabels_l <- factor(zlabels[[1]])
+levels(zlabels_l) <- c("L4", "L3", "L5", "L6", "L2", "L1", "WM")
+zlabels_l <- factor(zlabels_l, c("L1", "L2", "L3", "L4", "L5", "L6", "WM"))
+plotClusters(xym[[smp]], labels = zlabels_l, title = "Spatial domains", 
+  flip_xy = T, flip_y = T, ratio = 1.5) +
+  theme(legend.position = "bottom") +
+  scale_color_viridis_d(name = "Spatial domain")
+```
+
+# Multi-sample analysis
+## Run BASS
+```{r}
+smps <- c("151673", "151674", "151675", "151676")
+set.seed(0)
+# Set up BASS object
+BASS <- createBASSObject(cntm[smps], xym[smps], C = C, R = R,
+  beta_est_approach = "ACCUR_EST", init_method = "mclust",
+  burn_in = 10000, samples = 10000)
+
+# Data pre-processing:
+# In addition to the log-normalization, feature selection, and dimension
+# reduction with PCA, we also conduct a batch effect adjustment using the
+# Harmony package.
+BASS <- BASS.preprocess(BASS, doLogNormalize = TRUE,
+  geneSelect = "sparkx", nSE = 3000,
+  doPCA = TRUE, scaleFeature = FALSE, nPC = 20)
+
+# Run BASS algorithm
+BASS <- BASS.run(BASS)
+```
+
+```{r message = FALSE, warning = FALSE}
+# post-process posterior samples:
+BASS <- BASS.postprocess(BASS)
+zlabels <- BASS@res_postprocess$z_ls # spatial domain labels
+names(zlabels) <- smps
+```
+
+## Visualization
+```{r message = FALSE, warning = FALSE}
+library(cowplot)
+# Spatial domains
+zTypes <- c("L3", "L2", "L6", "L4", "WM", "L1", "L5")
+zlabels <- lapply(zlabels, function(zlabels.l){
+  zlabels.l <- factor(zlabels.l)
+  levels(zlabels.l) <- zTypes
+  zlabels.l <- factor(zlabels.l, levels = c(
+  "L1", "L2", "L3", "L4", "L5", "L6", "WM"))
+})
+plist <- lapply(smps, function(smp){
+  ARI <- round(adjustedRandIndex(zlabels[[smp]], 
+    infom[[smp]]$layer_guess_reordered_short), 
+    digits = 2)
+  plotClusters(xym[[smp]], zlabels[[smp]], 
+    title = paste0(smp, " (ARI =", ARI, ") "),
+    flip_xy = T, flip_y = T, ratio = 1.5) +
+    scale_color_viridis_d(name = "Spatial domain")
+})
+```
+```{r, fig.height=4, fig.width=12}
+plot_grid(plotlist = plist, ncol = 4)
+```
+
+# Summary of spatial domain detection across all 12 tissue sections
+## Manually annotated spatial domain labels
+![](DLPFC_ground_truth.jpg)
+
+## Single-sample analysis by BASS
+![](DLPFC_BASS_1.jpg)
+
+## Multi-sample analysis by BASS
+![](DLPFC_BASS_4.jpg)

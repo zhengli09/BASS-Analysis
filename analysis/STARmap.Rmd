@@ -11,7 +11,7 @@ editor_options:
 
 # Introduction
 Here, we apply BASS to analyze the STARmap mPFC (mouse medial prefrontal cortex) 
-data from [Wang et al. 2018](https://www.science.org/doi/10.1126/science.aat5691). 
+dataset from [Wang et al., 2018](https://www.science.org/doi/10.1126/science.aat5691). 
 For single-sample analysis, we focus on the tissue section BZ5. For multi-sample 
 analysis, we focus on tissue sections BZ5, BZ9 and BZ14 that were measured on the 
 mPFC region of different mice. The original data can be downloaded from 
@@ -36,7 +36,7 @@ load("data/starmap_mpfc.RData")
 cnts <- starmap_cnts["20180417_BZ5_control"] # 166x1049 count data
 info <- starmap_info["20180417_BZ5_control"]
 xy <- lapply(info, function(info.i){
-  as.matrix(info.i[, c("x", "y")]) # 1049x2 spatial coordiantes
+  as.matrix(info.i[, c("x", "y")]) # 1049x2 spatial coordinates
 })
 cnts[[1]][1:5,1:5]
 head(xy[[1]])
@@ -67,7 +67,7 @@ BASS <- BASS.run(BASS)
 # post-process posterior samples:
 # 1.Adjust for label switching with the ECR-1 algorithm
 # 2.Summarize the posterior samples to obtain the cell type labels, spatial 
-#   domain labels, and cell type proportion matrix estiamte
+#   domain labels, and cell type proportion matrix estimate
 BASS <- BASS.postprocess(BASS)
 clabels <- BASS@res_postprocess$c_ls # cell type clusters
 zlabels <- BASS@res_postprocess$z_ls # spatial domain labels
@@ -94,8 +94,8 @@ top5 <- markers %>%
   top_n(n = 5, wt = avg_logFC)
 subset(top5, cluster == 7) # Markers of eL2/3 cells
 
-# By checking the top DE genes of each cell type cluster, we annotate 
-# specific cell types for each cluster
+# By checking the top DE genes of each cell type cluster, 
+# we annotate specific cell types for each cluster
 cTypes <- c("eL5d", "eL6", "OPC", "eL5c", "eL5a", 
   "Astro", "eL2/3", "Reln", "SST-Lhx6", "eL5b", 
   "Smc", "Micro", "Smc-Astro", "Oligo", "VIP")
@@ -130,7 +130,6 @@ plotCellTypes(xy, clabels_l, ncol = 5) +
   theme(plot.title = element_text(hjust = 0.5))
 ```
 
-
 ```{r fig.height=3, fig.width=3}
 # Cell type compositions in each spatial domain
 pi_est <- BASS@res_postprocess$pi_ls
@@ -146,7 +145,7 @@ plotCellTypeComp(pi_est)
 # We use all the three tissue sections: BZ5, BZ9, and BZ14 in 
 # the multi-sample analysis
 xy <- lapply(starmap_info, function(info.i){
-  as.matrix(info.i[, c("x", "y")]) # spatial coordiantes
+  as.matrix(info.i[, c("x", "y")]) # spatial coordinates
 })
 cnts <- starmap_cnts # count matrices for three tissue sections
 # hyper-parameters
@@ -250,8 +249,6 @@ l <- 1
 plotCellTypes(xy[[l]], clabels[[l]], ncol = 5) +
   scale_colour_manual("Cell types", values = getPalette(15))
 ```
-
-
 
 ```{r fig.height=3, fig.width=3}
 # Cell type compositions in each spatial domain

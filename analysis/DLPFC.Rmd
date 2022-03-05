@@ -34,11 +34,14 @@ they contain similar tissue structures.
 
 ```{r error=FALSE,message=FALSE}
 library(BASS)
-# cntm: a list of expression count matrices for 12 tissue sections
+# cntm: a list of expression count matrices for 4 tissue sections
+#       (151673-151676) from the same individual
 # infom: a list of manually annotated labels of seven laminar 
-#        clusters by the original study for 12 tissue sections
-# xym: a list of spatial coordinates for 12 tissue sections 
-load("data/spatialLIBD.RData")
+#        clusters by the original study for 4 tissue sections
+#        (151673-151676) from the same individual
+# xym: a list of spatial coordinates for 4 tissue sections
+#      (151673-151676) from the same individual 
+load("data/spatialLIBD_p3.RData")
 
 # hyper-parameters
 # We set the number of cell types to a relatively large

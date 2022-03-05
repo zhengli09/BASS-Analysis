@@ -368,7 +368,7 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/zhengli09/BASS-analysis">
+  <a href="https://github.com/zhengli09//BASS-analysis">
     <span class="fab fa-github"></span>
      
     Source code
@@ -501,22 +501,24 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistreee9eebcb67fe25dc97a80287c33820f9d3722e9a7targetblanke9eebcba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zhengli09/BASS-analysis/tree/e9eebcb67fe25dc97a80287c33820f9d3722e9a7" target="_blank">e9eebcb</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistreeb3e7dcfca04a59b7b7258c9467537c2dedef22f5targetblankb3e7dcfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zhengli09//BASS-analysis/tree/b3e7dcfca04a59b7b7258c9467537c2dedef22f5" target="_blank">b3e7dcf</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistreee9eebcb67fe25dc97a80287c33820f9d3722e9a7targetblanke9eebcba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistreeb3e7dcfca04a59b7b7258c9467537c2dedef22f5targetblankb3e7dcfa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zhengli09/BASS-analysis/tree/e9eebcb67fe25dc97a80287c33820f9d3722e9a7" target="_blank">e9eebcb</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zhengli09//BASS-analysis/tree/b3e7dcfca04a59b7b7258c9467537c2dedef22f5" target="_blank">b3e7dcf</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
-working directory clean
+Unstaged changes:
+    Deleted:    data/spatialLIBD.RData
+
 </code></pre>
 <p>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
@@ -559,7 +561,41 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/e9eebcb67fe25dc97a80287c33820f9d3722e9a7/analysis/DLPFC.Rmd" target="_blank">e9eebcb</a>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/b3e7dcfca04a59b7b7258c9467537c2dedef22f5/analysis/DLPFC.Rmd" target="_blank">b3e7dcf</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-03-05
+</td>
+<td>
+Separate spatialLIBD data into three parts, each corresponding to an
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zhengli09//BASS-analysis/68275b23b5780b95bfdcc15deadec59b7a752d15/docs/DLPFC.html" target="_blank">68275b2</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-03-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/e9eebcb67fe25dc97a80287c33820f9d3722e9a7/analysis/DLPFC.Rmd" target="_blank">e9eebcb</a>
 </td>
 <td>
 zhengli09
@@ -582,11 +618,14 @@ Add DLPFC analysis
 <h1>Introduction</h1>
 <p>Here, we apply BASS to analyze the DLPFC (human dorsolateral prefrontal cortex) dataset from <a href="https://www.nature.com/articles/s41593-020-00787-0">Maynard et al., 2021</a>. DLPFC data contains expression values of 33,538 genes measured on two pairs of tissue sections from three independent neurotypical adult donors. Each pair consisted of two directly adjacent, 10 <span class="math inline">\(\mu m\)</span> serial tissue sections with the second pair located 300 <span class="math inline">\(\mu m\)</span> posterior to the first, resulting in a total of 12 tissue sections. The original data can be downloaded from <a href="https://github.com/LieberInstitute/spatialLIBD">here</a>. We excluded spots that are not mapped to the tissue region in the histology image and retained a total of 33,538 genes measured on 4,226 (151507), 4,384 (151508), 4,789 (151509), 4,634 (151510), 3,661 (151669), 3,498 (151670), 4,110 (151671), 4,015 (151672), 3,639 (151673), 3,673 (151674), 3,592 (151675), and 3,460 (151676) spots along with their spatial locations for further analysis. The processed data can be download from the <a href="https://github.com/zhengli09/BASS-Analysis/tree/master/data">data directory</a>. We focused our analysis only on spatial domain detection because the clustering of spatial spots no longer has the cell type interpretation. For single-sample analysis, we analyzed each of the 12 tissue sections separately. For multi-sample analysis, we jointly analyzed four tissue sections from each adult donor because they contain similar tissue structures.</p>
 <pre class="r"><code>library(BASS)
-# cntm: a list of expression count matrices for 12 tissue sections
+# cntm: a list of expression count matrices for 4 tissue sections
+#       (151673-151676) from the same individual
 # infom: a list of manually annotated labels of seven laminar 
-#        clusters by the original study for 12 tissue sections
-# xym: a list of spatial coordinates for 12 tissue sections 
-load(&quot;data/spatialLIBD.RData&quot;)
+#        clusters by the original study for 4 tissue sections
+#        (151673-151676) from the same individual
+# xym: a list of spatial coordinates for 4 tissue sections
+#      (151673-151676) from the same individual 
+load(&quot;data/spatialLIBD_p3.RData&quot;)
 
 # hyper-parameters
 # We set the number of cell types to a relatively large
@@ -640,7 +679,7 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     ......................................................................................
     . Method                         Time (sec)           Status                         . 
     ......................................................................................
-    . ECR-ITERATIVE-1                179.377              Converged (3 iterations)       . 
+    . ECR-ITERATIVE-1                178.602              Converged (3 iterations)       . 
     ......................................................................................
 
     Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
@@ -649,12 +688,12 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     Retrieve the 1 best clusterings: [...]$clusters
     Retrieve the 1 CPU times: [...]$timings
     Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 186.9 seconds. 
+    Label switching finished. Total time: 185.9 seconds. 
 
     ......................................................................................
     . Method                         Time (sec)           Status                         . 
     ......................................................................................
-    . ECR-ITERATIVE-1                98.06                Converged (3 iterations)       . 
+    . ECR-ITERATIVE-1                98.758               Converged (3 iterations)       . 
     ......................................................................................
 
     Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
@@ -663,7 +702,7 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     Retrieve the 1 best clusterings: [...]$clusters
     Retrieve the 1 CPU times: [...]$timings
     Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 105.5 seconds. </code></pre>
+    Label switching finished. Total time: 105.8 seconds. </code></pre>
 <pre class="r"><code>zlabels &lt;- BASS@res_postprocess$z_ls # spatial domain labels</code></pre>
 </div>
 <div id="visualization" class="section level2">
@@ -680,6 +719,43 @@ plotClusters(xym[[smp]], labels = zlabels_l, title = &quot;Spatial domains&quot;
   theme(legend.position = &quot;bottom&quot;) +
   scale_color_viridis_d(name = &quot;Spatial domain&quot;)</code></pre>
 <p><img src="figure/DLPFC.Rmd/unnamed-chunk-4-1.png" width="384" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/68275b23b5780b95bfdcc15deadec59b7a752d15/docs/figure/DLPFC.Rmd/unnamed-chunk-4-1.png" target="_blank">68275b2</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-03-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="multi-sample-analysis" class="section level1">
@@ -741,7 +817,7 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     ......................................................................................
     . Method                         Time (sec)           Status                         . 
     ......................................................................................
-    . ECR-ITERATIVE-1                495.692              Converged (3 iterations)       . 
+    . ECR-ITERATIVE-1                494.959              Converged (3 iterations)       . 
     ......................................................................................
 
     Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
@@ -750,12 +826,12 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     Retrieve the 1 best clusterings: [...]$clusters
     Retrieve the 1 CPU times: [...]$timings
     Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 526 seconds. 
+    Label switching finished. Total time: 524.9 seconds. 
 
     ......................................................................................
     . Method                         Time (sec)           Status                         . 
     ......................................................................................
-    . ECR-ITERATIVE-1                485.717              Converged (4 iterations)       . 
+    . ECR-ITERATIVE-1                482.04               Converged (4 iterations)       . 
     ......................................................................................
 
     Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
@@ -764,7 +840,7 @@ BASS &lt;- BASS.postprocess(BASS)</code></pre>
     Retrieve the 1 best clusterings: [...]$clusters
     Retrieve the 1 CPU times: [...]$timings
     Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 514.7 seconds. </code></pre>
+    Label switching finished. Total time: 510.3 seconds. </code></pre>
 <pre class="r"><code>zlabels &lt;- BASS@res_postprocess$z_ls # spatial domain labels
 names(zlabels) &lt;- smps</code></pre>
 </div>
@@ -790,6 +866,43 @@ plist &lt;- lapply(smps, function(smp){
 })</code></pre>
 <pre class="r"><code>plot_grid(plotlist = plist, ncol = 4)</code></pre>
 <p><img src="figure/DLPFC.Rmd/unnamed-chunk-8-1.png" width="1152" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/68275b23b5780b95bfdcc15deadec59b7a752d15/docs/figure/DLPFC.Rmd/unnamed-chunk-8-1.png" target="_blank">68275b2</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-03-05
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="summary-of-spatial-domain-detection-across-all-12-tissue-sections" class="section level1">

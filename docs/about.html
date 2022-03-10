@@ -15,7 +15,7 @@
 
 <title>Software tutorial</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.12.1/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -77,6 +77,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -97,6 +98,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -322,7 +326,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -341,7 +345,7 @@ div.tocify {
   <a href="simu.html">Simulation</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Real data analyses
      
     <span class="caret"></span>
@@ -365,7 +369,7 @@ div.tocify {
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/zhengli09//BASS-analysis">
-    <span class="fa fa-github"></span>
+    <span class="fab fa-github"></span>
      
     Source code
   </a>
@@ -406,7 +410,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-02-27
+<strong>Last updated:</strong> 2022-03-10
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -497,16 +501,16 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree4ec8df1262087c7c78f682e56014a7087a756d4ftargetblank4ec8df1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zhengli09//BASS-analysis/tree/4ec8df1262087c7c78f682e56014a7087a756d4f" target="_blank">4ec8df1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree34e84d6065c8b15a6d96cb444f9142b35d6667a3targetblank34e84d6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zhengli09//BASS-analysis/tree/34e84d6065c8b15a6d96cb444f9142b35d6667a3" target="_blank">34e84d6</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree4ec8df1262087c7c78f682e56014a7087a756d4ftargetblank4ec8df1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree34e84d6065c8b15a6d96cb444f9142b35d6667a3targetblank34e84d6a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zhengli09//BASS-analysis/tree/4ec8df1262087c7c78f682e56014a7087a756d4f" target="_blank">4ec8df1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/zhengli09//BASS-analysis/tree/34e84d6065c8b15a6d96cb444f9142b35d6667a3" target="_blank">34e84d6</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -550,6 +554,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/34e84d6065c8b15a6d96cb444f9142b35d6667a3/analysis/about.Rmd" target="_blank">34e84d6</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-03-10
+</td>
+<td>
+Add software tutorial and multi-sample simulation
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zhengli09//BASS-analysis/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/about.html" target="_blank">9a68511</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-02-27
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -627,7 +665,7 @@ Start workflowr project.
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>In this tutorial, we introduce core functions and workflow of BASS to help you get familiar with the BASS package and start analyzing your own datasets. Please check out the <code>Real data analyses</code> sections for</p>
+<p>In this tutorial, we introduce the workflow and core functions of BASS to help you get familiar with the BASS package and start analyzing your own datasets. Please check the <code>Real data analyses</code> sections for examples on how we analyze spatial transcriptomic datasets.</p>
 </div>
 <div id="installation" class="section level1">
 <h1>Installation</h1>
@@ -636,16 +674,67 @@ Start workflowr project.
   install.packages(devtools)
 devtools::install_github(&quot;zhengli09/BASS&quot;)</code></pre>
 <pre class="r"><code>library(BASS)</code></pre>
-<pre><code>Loading required package: GIGrvg</code></pre>
-<pre><code>Loading required package: mclust</code></pre>
-<pre><code>Package &#39;mclust&#39; version 5.4.9
-Type &#39;citation(&quot;mclust&quot;)&#39; for citing this R package in publications.</code></pre>
 </div>
-<div id="introduction-to-bass-package" class="section level1">
-<h1>Introduction to BASS package</h1>
+<div id="workflow" class="section level1">
+<h1>Workflow</h1>
+<pre class="r"><code>load(&quot;data/starmap_mpfc.RData&quot;) # starmap_cnts, starmap_info</code></pre>
+<div id="step-1-create-a-bass-object" class="section level2">
+<h2>Step 1: create a BASS object</h2>
+<p>To facilitate all steps of the spatial transcriptomic analysis, we wrap up the raw data, processed data, model hyper-parameters, MCMC controlling parameters, and model results into a S4 object (BASS-class). Create a BASS object to start your analysis with the function <code>createBASSObject</code>. There are four required arguments: an L-list of gene expression count matrices for L tissue sections (<code>X</code>), an L-list of spatial coordinates matrices for L tissue sections (<code>xy</code>), the number of cell types (<code>C</code>) and the number of spatial domains (<code>R</code>). By default, we fix the cell-cell interaction parameter <span class="math inline">\(\beta\)</span> to the value specified by <code>beta</code> if the user has already had a good sense about the value of this parameter. However, BASS can also accurately infer the cell-cell interaction parameter <span class="math inline">\(\beta\)</span> based on the data at hand at the cost of a slightly longer computational time. Check the documentation of <code>createBASSObject</code> for further details.</p>
+<pre class="r"><code># gene expression count data
+cnts &lt;- starmap_cnts
+# spatial coordinates
+xy &lt;- lapply(starmap_info, function(info.i){
+  as.matrix(info.i[, c(&quot;x&quot;, &quot;y&quot;)])
+})
+BASS &lt;- createBASSObject(cnts, xy, C = 15, R = 4, 
+  beta_est_approach = &quot;ACCUR_EST&quot;)</code></pre>
+<pre><code>***************************************
+  INPUT INFO:
+    - Number of tissue sections: 3 
+    - Number of cells/spots: 1049 1053 1088 
+    - Number of genes: 166 
+    - Potts interaction parameter estimation approach: ACCUR_EST 
+    - Variance-covariance structure of gene expression features: EEE 
+  To list all hyper-parameters, Type listAllHyper(BASS_object)
+***************************************</code></pre>
+<p>You can check all the hyper-parameters that BASS uses with the function <code>listAllHyper</code>.</p>
+<pre class="r"><code>listAllHyper(BASS)</code></pre>
+<pre><code>***************************************
+  Please refer to the paper for details of the paramters
+  ALL HYPER-PARAMETERS:
+    - Number of cell types C: 15
+    - Number of spatial domains R: 4
+    - Initialization method: kmeans
+    - Covariance structure: EEE
+    - Scale matrix of the inverse-Wishart prior W0: 1I
+    - Degrees of freedom of the inverse-Wishart prior n0: 1
+    - Number of MCMC burn-in iterations: 10000
+    - Number of MCMC posterior samples: 10000
+    - Potts interaction parameter estimation approach: ACCUR_EST
+    - Number of burn-in interations in Potts sampling: 100
+    - Number of Potts samples to approximate the partition ratio: 100
+    - Step size of a uniform random walk epsilon: 0.1
+    - Threshold of convergence for beta: 0.1
+    - Upper bound for beta: 4
+    - Concentration parameter of the Dirichlet prior alpha0: 1
+    - Minimum number of neighbors for each cell/spot based on the Euclidean distance: 4
+***************************************</code></pre>
 </div>
-<div id="core-functions" class="section level1">
-<h1>Core functions</h1>
+<div id="step-2-pre-process-the-gene-expression-data" class="section level2">
+<h2>Step 2: pre-process the gene expression data</h2>
+<p>We pre-process the raw gene expression data stored at the <code>BASS@X</code> slot and store the processed data at the <code>BASS@X_run</code> slot for running the following BASS algorithm. We have provided a function <code>BASS.preprocess</code> to automate the pre-processing steps, where we combine cells/spots across all L tissue sections, conduct library size normalization followed by a log2-transformation (after adding a pseudo-count of 1), select feature genes, perform dimension reduction with PCA on the normalized expression matrix to extract J low-dimensional expression features, and perform batch effect adjustment with <a href="https://www.nature.com/articles/s41592-019-0619-0">Harmony</a> to align expression data from different tissue sections. Users can also pre-process the gene expression data by themselves and store the processed data to the <code>BASS@X_run</code> slot. Check the documentation of <code>BASS.preprocess</code> for further details and various other controls.</p>
+<pre class="r"><code>BASS &lt;- BASS.preprocess(BASS)</code></pre>
+</div>
+<div id="step-3-run-the-bass-algorithm" class="section level2">
+<h2>Step 3: run the BASS algorithm</h2>
+<p>Run the Gibbs sampling algorithm in combination with the Metroplis-Hastings algorithm to sample all the parameters specified in the BASS model. Posterior samples of all the parameters are stored in the <code>BASS@res</code> slot and you can find a detailed description of what has been stored in <code>BASS@res</code> in the documentation of the BASS object (?`BASS-class`). Check the documentation of <code>BASS.run</code> for further details.</p>
+<pre class="r"><code>BASS &lt;- BASS.run(BASS)</code></pre>
+</div>
+<div id="step-4-post-process-the-posterior-sampling-results" class="section level2">
+<h2>Step 4: post-process the posterior sampling results</h2>
+<p>Post-process the posterior sampling results with the function <code>BASS.postprocess</code>. There, we address the label switching issue associated with the sampling of cell type labels and spatial domain labels based on the iterative version 1 of the equivalence class representation (ECR) algorithm implemented in the <a href="https://www.jstatsoft.org/article/view/v069c01">label.switching</a> package. In addition, we summarize posterior samples and obtain final estimates of cell type labels, spatial domain labels, and cell type composition in each spatial domain. The resulting estimates are stored in the <code>BASS@res_postprocess</code> slot. Check the documentation of <code>BASS.postprocess</code> for further details.</p>
+<pre class="r"><code>BASS &lt;- BASS.postprocess(BASS)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -677,17 +766,18 @@ other attached packages:
 [1] BASS_1.0        mclust_5.4.9    GIGrvg_0.5      workflowr_1.7.0
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8      bslib_0.3.1     compiler_4.1.2  pillar_1.7.0   
- [5] later_1.1.0.1   git2r_0.28.0    jquerylib_0.1.4 tools_4.1.2    
- [9] getPass_0.2-2   digest_0.6.29   jsonlite_1.8.0  evaluate_0.15  
-[13] tibble_3.1.6    lifecycle_1.0.1 pkgconfig_2.0.3 rlang_1.0.1    
-[17] cli_3.2.0       rstudioapi_0.13 yaml_2.3.5      xfun_0.29      
-[21] fastmap_1.1.0   httr_1.4.2      stringr_1.4.0   knitr_1.37     
-[25] sass_0.4.0      fs_1.5.2        vctrs_0.3.8     rprojroot_2.0.2
-[29] glue_1.6.2      R6_2.5.1        processx_3.5.2  fansi_1.0.2    
-[33] rmarkdown_2.11  callr_3.7.0     magrittr_2.0.2  whisker_0.4    
-[37] ps_1.6.0        promises_1.1.1  htmltools_0.5.2 ellipsis_0.3.2 
-[41] httpuv_1.5.4    utf8_1.2.2      stringi_1.7.6   crayon_1.5.0   </code></pre>
+ [1] Rcpp_1.0.8       bslib_0.3.1      compiler_4.1.2   pillar_1.7.0    
+ [5] later_1.1.0.1    git2r_0.28.0     jquerylib_0.1.4  tools_4.1.2     
+ [9] getPass_0.2-2    digest_0.6.29    jsonlite_1.8.0   evaluate_0.15   
+[13] tibble_3.1.6     lifecycle_1.0.1  pkgconfig_2.0.3  rlang_1.0.1     
+[17] cli_3.2.0        rstudioapi_0.13  yaml_2.3.5       xfun_0.29       
+[21] fastmap_1.1.0    httr_1.4.2       stringr_1.4.0    knitr_1.37      
+[25] sass_0.4.0       fs_1.5.2         vctrs_0.3.8      rprojroot_2.0.2 
+[29] glue_1.6.2       R6_2.5.1         processx_3.5.2   fansi_1.0.2     
+[33] rmarkdown_2.12.1 callr_3.7.0      magrittr_2.0.2   whisker_0.4     
+[37] ps_1.6.0         promises_1.1.1   htmltools_0.5.2  ellipsis_0.3.2  
+[41] httpuv_1.5.4     utf8_1.2.2       stringi_1.7.6    crayon_1.5.0    </code></pre>
+</div>
 </div>
 </div>
 

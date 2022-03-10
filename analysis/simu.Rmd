@@ -10,8 +10,8 @@ editor_options:
 ---
 [simulation]: https://github.com/zhengli09/BASS-Analysis/tree/master/code/
 [params]: https://github.com/zhengli09/BASS-Analysis/tree/master/data/params.txt
+[params_mult]: https://github.com/zhengli09/BASS-Analysis/tree/master/data/params_mult.txt
 [visualization]: https://github.com/zhengli09/BASS-Analysis/tree/master/code/viz.R
-
 
 # Introduction
 This page provides code to reproduce all the simulation results for BASS.
@@ -27,10 +27,9 @@ found at [simulation][].
 
 ```{r}
 source("code/simu_utils.R")
-# data for inferring parameters for splatter
-load("data/starmap_mpfc.RData") # starmap_cnts, starmap_info
-cnts <- starmap_cnts[["20180417_BZ5_control"]]
-info <- starmap_info[["20180417_BZ5_control"]]
+# data from STARmap (BZ5) for inferring parameters for splatter
+cnts <- readRDS("data/simu_cnts.RDS")
+info <- readRDS("data/simu_info.RDS")
 xy <- as.matrix(info[, c("x", "y")])
 starmap <- list(cnts = cnts, info = info)
 
@@ -184,6 +183,34 @@ fict_out
 ```
 
 ## Multi-sample simulation
+In addition to simulating and analyzing a single tissue section, we also 
+simulated multiple tissue sections and evaluated the performance of BASS for 
+multi-sample integrative analysis. Specifically, we generated additional tissue 
+sections based on the same spatial locations of the 1,127 cells in the single 
+tissue section analysis but with slightly different spatial domain allocations 
+for them, creating varying spatial domain boundaries between the four cortical 
+layers on different tissue sections. In each section, we set the spatial domain 
+boundaries to be vertical, and created new boundaries by horizontally moving the 
+original boundaries based on a uniform distribution with step size set to be
+approximately 10% (= 500) of the tissue width. The resulting new tissue sections 
+are as follows.
+![](add_tis_sects.png)
+
+Here, similar to the single-sample analysis, we generate the simulated data 
+under the baseline simulation setting but for five tissue sections (`L = 5`). 
+Refer to the [params_mult][] file for a complete list of simulation settings.
+```{r}
+# generate simulated data for five tissue sections
+L <- 5
+sim_dat <- simu(
+  starmap = starmap, scenario = scenario, C = C, J = J, L = L, 
+  batch_facLoc = 0, de_prop = de_prop, de_facLoc = de_facLoc, 
+  de_facScale = 0.4, sim_seed = seeds[rep], debug = FALSE)
+# run BASS
+BASS_out <- run_BASS(sim_dat, xy, "ACCUR_EST", beta = 1, C, R, 
+                     init_method = "kmeans", cov_struc = "EEE")
+BASS_out
+```
 
 # Find all the simulation results
 Put the link to all the simulation results here later and plot the two main 

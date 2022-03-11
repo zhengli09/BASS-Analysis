@@ -182,7 +182,7 @@ fict_out <- fict_cluster(sim_dat, xy, C, case = 3, rep)
 fict_out
 ```
 
-## Multi-sample simulation
+# Multi-sample simulation
 In addition to simulating and analyzing a single tissue section, we also 
 simulated multiple tissue sections and evaluated the performance of BASS for 
 multi-sample integrative analysis. Specifically, we generated additional tissue 

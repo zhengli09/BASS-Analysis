@@ -1,7 +1,7 @@
 ---
 title: "Introduction to BASS"
 author: "Zheng Li"
-date: "2022-02-06"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
 site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
@@ -12,8 +12,8 @@ editor_options:
 
 # Welcome to the BASS website!
 This website maintains code for reproducing simulation and real data
-application results described in the upcoming paper.For the software, 
-please to refer to [BASS](https://github.com/zhengli09/BASS). 
+application results described in the upcoming paper. For the software, 
+please refer to [BASS](https://github.com/zhengli09/BASS). 
 
 # Introduction to BASS
 BASS is a method for multi-scale and multi-sample analysis in spatial 
@@ -33,8 +33,8 @@ across tissue samples.
 ## BASS Model overview
 BASS relies on a Bayesian hierarchical modeling framework that describes the 
 relationship among gene expression features, cell type labels, spatial domain 
-labels, cell type compositions, and neighborhood graphs in a hierarchical 
-fashion:
+labels, cell type compositions in each spatial domain, and neighborhood graphs 
+in a hierarchical fashion:
 $$
   \boldsymbol{x}_i^{(l)} | c_i^{(l)} = c \sim MVN(\boldsymbol{\mu}_c, \boldsymbol{\Sigma}) 
 $$
@@ -48,13 +48,11 @@ Above, the first equation models the expression feature of the $i$th cell on
 section $l$, $\boldsymbol{x}_i^{(l)}$, as depending on its cell type label 
 $c_i^{(l)}$ with a multivariate normal distribution parameterized by a cell 
 type-specific mean parameter $\boldsymbol{\mu}_c$ and a variance-covariance 
-matrix $\boldsymbol{\Sigma}$. The second equation models the probability of the 
-$i$th cell belonging to the cell type $c$ as depending on the underlying spatial 
-domain with a categorical distribution parameterized by the $r$ domain-specific 
-cell type composition vector $\boldsymbol{\pi}_r$. The third equation models the 
-spatial domain label of all cells on the section $l$, $\boldsymbol{z}^{(l)}$, as 
-a function of the neighoborhood graph $V^{(l)}$ through a homogeneous Potts model 
-characterized by an interaction parameter $\beta$.
-
-
+matrix $\boldsymbol{\Sigma}$ that is shared across cell types. The second 
+equation models the probability of the $i$th cell belonging to the cell type 
+$c$ as depending on the underlying spatial domain with a categorical distribution parameterized by the $r$ domain-specific cell type composition vector 
+$\boldsymbol{\pi}_r$. The third equation models the spatial domain label of all 
+cells on the section $l$, $\boldsymbol{z}^{(l)}$, as a function of the 
+neighborhood graph $V^{(l)}$ through a homogeneous Potts model characterized by 
+an interaction parameter $\beta$.
 

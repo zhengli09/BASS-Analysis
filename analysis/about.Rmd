@@ -1,7 +1,7 @@
 ---
 title: "Software tutorial"
 author: "Zheng Li"
-date: "2022-02-06"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
   workflowr::wflow_html:
     toc: true
@@ -15,8 +15,14 @@ Please check the `Real data analyses` sections for examples on how we analyze
 spatial transcriptomic datasets.
 
 # Installation
-Install BASS R package maintained in [github](https://github.com/zhengli09/BASS) 
-through the "devtools" package.
+BASS is implemented as an R (>= 4.0.3) package with underlying efficient C++ 
+code interfaced through Rcpp and RcppArmadillo. BASS depends on a few other 
+R packages that include GIGrvg, Matrix, harmony, label.switching, mclust, Rcpp, 
+RcppArmadillo, RcppDist, SPARK, scran, and scater. Please refer to the package 
+[DESCRIPTION](https://github.com/zhengli09/BASS/blob/master/DESCRIPTION) file 
+for details. Dependent packages are supposed to be automatically installed while 
+installing BASS. Install the [BASS R package](https://github.com/zhengli09/BASS) 
+maintained in github through the `devtools` package.
 ```{r eval = FALSE}
 if(!require(devtools))
   install.packages(devtools)
@@ -34,17 +40,34 @@ load("data/starmap_mpfc.RData") # starmap_cnts, starmap_info
 ## Step 1: create a BASS object
 To facilitate all steps of the spatial transcriptomic analysis, we wrap up the 
 raw data, processed data, model hyper-parameters, MCMC controlling parameters, 
-and model results into a S4 object (BASS-class). Create a BASS object to start 
-your analysis with the function `createBASSObject`. There are four required 
-arguments: an L-list of gene expression count matrices for L tissue sections 
-(`X`), an L-list of spatial coordinates matrices for L tissue sections (`xy`), 
-the number of cell types (`C`) and the number of spatial domains (`R`). By 
-default, we fix the cell-cell interaction parameter $\beta$ to the value 
-specified by `beta` if the user has already had a good sense about the value of 
-this parameter. However, BASS can also accurately infer the cell-cell 
-interaction parameter $\beta$ based on the data at hand at the cost of a 
-slightly longer computational time. Check the documentation of 
-`createBASSObject` for further details.
+and model results into an S4 object (`BASS-class`). Check details of the 
+`BASS-class` object by typing `help("BASS-class")`. Create a BASS object to 
+start your analysis with the function `createBASSObject`. There are four 
+required arguments: an L-list of gene expression count matrices for L tissue 
+sections (`X`), an L-list of spatial coordinates matrices for L tissue sections 
+(`xy`), the number of cell types (`C`) and the number of spatial domains (`R`). 
+Check the simulation section of our paper for an evaluation of the influence of 
+the specified number of cell types/spatial domains on the performance of all 
+methods, and the discussion section of our paper for a practical guideline on 
+how to select the two hyper-parameters when the truths are unclear. By default, 
+we infer the spatial interaction parameter $\beta$ based on the data at hand by 
+specifying `beta_method = "SW"`. However, if you have already had a good sense 
+about the value of $\beta$ (usually between 1 and 2), you can fix this parameter 
+to the value specified by `beta` and set `beta_method = "fix"`. Check the 
+documentation of `createBASSObject` for further details.
+
+Notes:  
+The BASS software currently implements a stopping rule to automatically 
+determine the number of MCMC samples required for inferring $\beta$. In 
+particular, we calculate the mean of the sampled $\beta$ in every 100 iterations 
+and stop sampling if the difference of the consecutive two means is below a 
+certain threshold (`tol = 0.001` by default). Such stopping rule can help 
+improve the computational efficiency and works well in almost all cases. In 
+cases where the default number of MCMC iterations (2000) is not sufficient to 
+reach the stopping threshold, we have incorporated a warning message into the 
+software to encourage users to manually inspect the trace plot of $\beta$ to 
+determine if a larger number of burn-in iterations is needed. Check the 
+supplementary figure of our paper for examples of well-behaved trace plots.
 ```{r}
 # gene expression count data
 cnts <- starmap_cnts
@@ -52,8 +75,7 @@ cnts <- starmap_cnts
 xy <- lapply(starmap_info, function(info.i){
   as.matrix(info.i[, c("x", "y")])
 })
-BASS <- createBASSObject(cnts, xy, C = 15, R = 4, 
-  beta_est_approach = "ACCUR_EST")
+BASS <- createBASSObject(cnts, xy, C = 15, R = 4, beta_method = "SW")
 ```
 
 You can check all the hyper-parameters that BASS uses with the function 
@@ -63,45 +85,53 @@ listAllHyper(BASS)
 ```
 
 ## Step 2: pre-process the gene expression data
-We pre-process the raw gene expression data stored at the `BASS@X` slot and 
-store the processed data at the `BASS@X_run` slot for running the following 
-BASS algorithm. We have provided a function `BASS.preprocess` to automate the 
-pre-processing steps, where we combine cells/spots across all L tissue sections, 
-conduct library size normalization followed by a log2-transformation (after 
-adding a pseudo-count of 1), select feature genes, perform dimension reduction 
-with PCA on the normalized expression matrix to extract J low-dimensional 
-expression features, and perform batch effect adjustment with 
-[Harmony](https://www.nature.com/articles/s41592-019-0619-0) to align expression 
-data from different tissue sections. Users can also pre-process the gene 
-expression data by themselves and store the processed data to the `BASS@X_run` 
-slot. Check the documentation of `BASS.preprocess` for further details and 
+We pre-process the raw gene expression data stored at the `BASS@X` slot and
+store the processed data at the `BASS@X_run` slot for running the following
+BASS algorithm. We have provided a function `BASS.preprocess` to automate the
+pre-processing steps, where we combine cells/spots across all L tissue sections,
+conduct library size normalization followed by a log2-transformation (after
+adding a pseudo-count of 1), select feature genes, perform dimension reduction
+with PCA on the normalized expression matrix to extract J low-dimensional
+expression features, and perform batch effect adjustment with
+[Harmony](https://www.nature.com/articles/s41592-019-0619-0) to align expression
+data from different tissue sections. Users can also pre-process the gene
+expression data by themselves and store the processed data to the `BASS@X_run`
+slot. Check the documentation of `BASS.preprocess` for further details and
 various other controls.
 ```{r eval = FALSE}
 BASS <- BASS.preprocess(BASS)
 ```
 
 ## Step 3: run the BASS algorithm
-Run the Gibbs sampling algorithm in combination with the Metroplis-Hastings 
+Run the Gibbs sampling algorithm in combination with the Metropolis-Hastings 
 algorithm to sample all the parameters specified in the BASS model. Posterior 
-samples of all the parameters are stored in the `BASS@res` slot and you can 
-find a detailed description of what has been stored in `BASS@res` in the 
-documentation of the BASS object (?\`BASS-class\`). Check the documentation of 
-`BASS.run` for further details.
+samples of all the parameters are stored in the `BASS@samples` slot and you can 
+find a detailed description of what has been stored in `BASS@samples` by typing 
+`help("BASS-class")`. Check the documentation of `BASS.run` for further details.
 ```{r eval = FALSE}
 BASS <- BASS.run(BASS)
 ```
 
 ## Step 4: post-process the posterior sampling results
-Post-process the posterior sampling results with the function 
-`BASS.postprocess`. There, we address the label switching issue associated with 
-the sampling of cell type labels and spatial domain labels based on the 
-iterative version 1 of the equivalence class representation (ECR) algorithm 
-implemented in the 
-[label.switching](https://www.jstatsoft.org/article/view/v069c01) package. In 
-addition, we summarize posterior samples and obtain final estimates of cell type 
-labels, spatial domain labels, and cell type composition in each spatial domain. 
-The resulting estimates are stored in the `BASS@res_postprocess` slot. Check the 
-documentation of `BASS.postprocess` for further details. 
+Post-process the posterior sampling results with the function
+`BASS.postprocess`. There, we address the label switching issue associated with
+the sampling of cell type labels and spatial domain labels based on the
+iterative version 1 of the equivalence class representation (ECR) algorithm
+implemented in the
+[label.switching](https://www.jstatsoft.org/article/view/v069c01) package. In
+addition, we summarize posterior samples and obtain final estimates of cell type
+labels, spatial domain labels, and cell type composition in each spatial domain.
+The resulting estimates are stored in the `BASS@results` slot. Check the
+documentation of `BASS.postprocess` for further details.
+
+Notes:  
+ECR-1 algorithm can be computationally intense when the sample size, number of 
+posterior samples, specified number of cell types, or specified number of 
+spatial domains is large. We provide the option, `adjustLS = FALSE`, to directly 
+obtain final estimates of the cell type labels and spatial domain labels as the 
+mode of their posterior samples without adjusting for label switching. Such 
+approach can help improve the computational efficiency and the resulting 
+estimates are reasonably good.
 ```{r eval = FALSE}
 BASS <- BASS.postprocess(BASS)
 ```

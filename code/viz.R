@@ -75,16 +75,16 @@ plotMkrs <- function(cnts, markers, labels, legend_title, scale = T)
     as.numeric(df))
   colnames(df) <- c("x", "y", "Expression")
 
-  ggplot(df, aes(x = y, y = x, fill = Expression)) +
+  ggplot(df, aes(x = x, y = y, fill = Expression)) +
     geom_tile(color = "black") +
     theme_void() +
     theme(
       axis.text.x = element_text(angle = 90),
       axis.text.y = element_text()
       ) +
-    scale_x_discrete(limits = markers) +
-    scale_y_discrete(limits = cnames) +
-    scale_fill_gradient(name = legend_title, low = "#FFFFFF", high = "#e31a1c")
+    scale_x_discrete(limits = cnames, position = "top") +
+    scale_y_discrete(limits = markers) +
+    scale_fill_gradient(name = legend_title, low = "#f8f9fa", high = "#f07167")
 }
 
 
@@ -189,11 +189,14 @@ plotARIBox <- function(BASS_ARI, HMRF_ARI, HMRF_PCA_ARI, ylim = c(0, 1))
 plotARIBar <- function(ARIs, methods, cols)
 {
   df <- data.frame(ARI = ARIs, method = methods)
+  df$method <- factor(df$method, levels = methods)
   ggplot(df, aes(x = method, y = ARI, fill = method)) + 
     geom_bar(stat = "identity") +
     theme_bw() +
     theme(
       legend.position = c(0.8, 0.8),
+      axis.ticks.x = element_blank(),
+      axis.text.x = element_blank(),
       legend.background = element_blank()) +
     geom_text(aes(label = round(ARI, digits = 2)), vjust = -0.3) +
     scale_fill_manual(values = cols) +

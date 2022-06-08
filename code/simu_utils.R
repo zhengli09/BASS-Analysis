@@ -9,12 +9,14 @@ suppressPackageStartupMessages({
   library(BayesSpace)
   library(Seurat)
   library(SC3)
+  library(GapClust)
   library(mclust)
   library(tidyverse)
   library(scater)
   library(gtools)
   library(splatter)
   library(reticulate)
+  library(CVXR)
 })
 
 
@@ -23,7 +25,7 @@ suppressPackageStartupMessages({
 
 
 #' Cluster cells with Seurat
-seu_cluster <- function(sim_dat, resolutions)
+seu_cluster <- function(sim_dat, C, resolutions = seq(0.1, 4, by = 0.1))
 {
   cnts <- do.call(cbind, sim_dat[[1]])
   colnames(cnts) <- "Cell" %&% 1:ncol(cnts)
@@ -33,36 +35,20 @@ seu_cluster <- function(sim_dat, resolutions)
   seu <- RunPCA(seu, features = rownames(seu), verbose = F)
   seu <- FindNeighbors(seu, dims = 1:20, verbose = F)
   seu <- FindClusters(seu, resolution = resolutions, verbose = F)
-  ari <- sapply("RNA_snn_res." %&% resolutions, function(res){
-    adjustedRandIndex(seu[[res, drop = T]], unlist(sim_dat[[2]]))
-    })
   kest <- sapply("RNA_snn_res." %&% resolutions, function(res){
     length(unique(seu[[res, drop = T]]))
-    })
-  seu_out <- paste(ari, kest, sep = ",")
-}
-
-
-#' Cluster cells with Gaussian mixture models (GMM)
-gmm_cluster <- function(sim_dat, C, model)
-{
-  cnts <- do.call(cbind, sim_dat[[1]])
-  x <- scater::normalizeCounts(cnts, log = TRUE)
-  x <- scater::calculatePCA(x, scale = T)
-  gmm <- Mclust(x[, 1:20], G = C, modelNames = model, verbose = T)
-  ari <- adjustedRandIndex(gmm$classification, unlist(sim_dat[[2]]))
-}
-
-
-#' Cluster cells with k-means algorithm
-km_cluster <- function(sim_dat, C)
-{
-  cnts <- do.call(cbind, sim_dat[[1]])
-  x <- scater::normalizeCounts(cnts, log = TRUE)
-  x <- scater::calculatePCA(x, scale = T)
-  km <- kmeans(x[, 1:20], C, nstart = 25)
-  c_est <- km$cluster
-  ari <- adjustedRandIndex(c_est, unlist(sim_dat[[2]]))
+  })
+  out_res <- names(which.min(abs(kest - C)))
+  c_est <- as.numeric(as.character(seu[[out_res, drop = T]])) + 1
+  # evaluation
+  ctrue <-  unlist(sim_dat[[2]])
+  ari <- eval_ARI(c_est, ctrue)
+  F1 <- eval_F1(c_est, ctrue)
+  MCC <- eval_MCC(c_est, ctrue)
+  C_est <- length(unique(c_est))
+  clust_props <- calc_clust_prop(c_est, ctrue)
+  
+  list(metric = c(ari, F1, MCC), C_est = C_est, clust_props = clust_props)
 }
 
 
@@ -81,14 +67,23 @@ sc3_cluster <- function(sim_dat, C, seed = 0)
       return("error")}
     )
   if(is.character(sce)){
-    return(sce)
+    out <- list(metric = rep("error", 9), C_est = "error", 
+      clust_props = "error")
   } else{
     if(ncol(x) > 5000) sce <- sc3_run_svm(sce, ks = C)
     c_est <- colData(sce)[, "sc3_" %&% C %&% "_clusters"]
-    ari <- adjustedRandIndex(c_est, unlist(sim_dat[[2]]))
-    return(ari)
+    ctrue <- unlist(sim_dat[[2]])
+    ari <- eval_ARI(c_est, ctrue)
+    F1 <- eval_F1(c_est, ctrue)
+    MCC <- eval_MCC(c_est, ctrue)
+    C_est <- length(unique(c_est))
+    clust_props <- calc_clust_prop(c_est, ctrue)
+    out <- list(metric = c(ari, F1, MCC), C_est = C_est, 
+                clust_props = clust_props)
   }
+  return(out)
 }
+
 
 #' Cluster cells with FICT
 #' FICT input files:
@@ -102,7 +97,7 @@ fict_cluster <- function(sim_dat, xy, C, case, rep)
     "/net/mulan/home/zlisph/BASS_pjt/9_FICT/FICT-SAMPLE/FICT/",
     "/net/mulan/home/zlisph/BASS_pjt/9_FICT/FICT-SAMPLE/GECT/", sep = ":")
   Sys.setenv(PYTHONPATH = PYTHONPATH)
-  Sys.setenv(MPLBACKEND='Agg')
+  Sys.setenv(MPLBACKEND = 'Agg')
   fict <- "~/softwares/miniconda3/bin/fict"
   tmp_fder <- "~/BASS_pjt/2_simu/fict_tmp/case" %&% case %&% "/rep" %&% rep
   if(!file.exists(tmp_fder)) dir.create(tmp_fder, recursive = T)
@@ -128,15 +123,24 @@ fict_cluster <- function(sim_dat, xy, C, case, rep)
   # occasionally have error: numpy.linalg.LinAlgError: Internal Error.
   c_est <- tryCatch({
     read.table(tmp_fder %&% "/out/cluster_result.csv")
-    }, error = function(e) e)
+  }, error = function(e) e)
   if(!is.data.frame(c_est)){
-    return("error")
+    out <- list(metric = rep("error", 9), C_est = "error", 
+                clust_props = "error")
   } else{
-    ari <- adjustedRandIndex(c_est$V1, unlist(sim_dat[[2]]))
-    return(ari)
+    c_est <- c_est$V1+1
+    ctrue <- unlist(sim_dat[[2]])
+    ari <- eval_ARI(c_est, ctrue)
+    F1 <- eval_F1(c_est, ctrue)
+    MCC <- eval_MCC(c_est, ctrue)
+    C_est <- length(unique(c_est))
+    clust_props <- calc_clust_prop(c_est, ctrue)
+    out <- list(metric = c(ari, F1, MCC), C_est = C_est, 
+                clust_props = clust_props)
   }
   # remove tmp files
   unlink(tmp_fder, recursive = T)
+  return(out)
 }
 
 
@@ -147,7 +151,7 @@ match_pi <- function(pi_est, pi_true, z_est, z_true)
 {
   C <- nrow(pi_true)
   R <- ncol(pi_true)
-  # 1. Find tissue structure label correspondence
+  # 1. Find spatial domain label correspondence
   perms_R <- permutations(n = R, r = R)
   accur <- rep(NA, nrow(perms_R))
   for(i in 1:nrow(perms_R))
@@ -182,7 +186,7 @@ match_pi <- function(pi_est, pi_true, z_est, z_true)
 }
 
 
-#' Map tissue structure label to cell types in that region
+#' Map spatial domain label to cell types in that domain
 #' 1 -> (1, 2, 3), 2 -> (2, 3, 4)
 #' 3 -> (3, 4, 1), 4 -> (4, 1, 2)
 map_z2c <- function(z)
@@ -196,31 +200,139 @@ map_z2c <- function(z)
 }
 
 
+#' Produce the confusion matrix
+#' One difficulty for constructing the confusion matrix is that 
+#' the labeling from the clustering and truth may not match.
+#' We get around this difficulty by identifying the confusion matrix 
+#' such that the number of true positives (sum of diagonal values)
+#' is maximized.
+#' Note the number of clusters in est_labels needs to be smaller than
+#' or equal to the number of clusters in true_labels
+confusion <- function(est_labels, true_labels)
+{
+  C <- length(unique(true_labels))
+  est_labels <- factor(est_labels, 1:C)
+  A <- matrix(table(est_labels, true_labels), C, C)
+  P <- Variable(C, C, boolean = T) # row permutation matrix
+  Y <- Variable(C, C)
+  
+  problem <- Problem(Maximize(matrix_trace(Y)), list(Y == P %*% A, 
+    sum_entries(P, axis = 1) == 1, sum_entries(P, axis = 2) == 1))
+  result <- solve(problem)
+  P <- result$getValue(P)
+  confusion_mtx <- P %*% A
+}
+
+
+#' Evaluate the F1-score
+#' Refer to paper Chicco and Jurman, BMC Genomics, 2020
+eval_F1 <- function(est_labels, true_labels)
+{
+  C <- length(unique(true_labels))
+  confusion_mtx <- suppressMessages(confusion(est_labels, true_labels))
+  TP <- diag(confusion_mtx)
+  FP <- apply(confusion_mtx, 1, sum) - diag(confusion_mtx)
+  FN <- apply(confusion_mtx, 2, sum) - diag(confusion_mtx)
+  F1 <- 2 * TP / (2 * TP + FP + FN)
+  c(all_F1 = mean(F1), major_F1 = mean(F1[1:4]), rare_F1 = mean(F1[5:C]))
+}
+
+
+#' Evaluate Matthew correlation coefficient (MCC) score
+#' Refer to paper Chicco and Jurman, BMC Genomics, 2020
+eval_MCC <- function(est_labels, true_labels)
+{
+  C <- length(unique(true_labels))
+  confusion_mtx <- suppressMessages(confusion(est_labels, true_labels))
+  TP <- diag(confusion_mtx)
+  FP <- apply(confusion_mtx, 1, sum) - diag(confusion_mtx)
+  FN <- apply(confusion_mtx, 2, sum) - diag(confusion_mtx)
+  TN <- sum(confusion_mtx) - TP - FP - FN
+  MCC <- (TP * TN - FP * FN) / 
+    sqrt((TP + FP) * (TP + FN) * (TN + FP) * (TN + FN))
+  MCC[is.na(MCC)] <- 0
+  c(all_MCC = mean(MCC), major_MCC = mean(MCC[1:4]), rare_MCC = mean(MCC[5:C]))
+}
+
+
+#' Evaluate the adjusted Random Index(ARI)
+eval_ARI <- function(est_labels, true_labels)
+{
+  major_cells <- true_labels %in% 1:4
+  rare_cells <- !major_cells
+  all_ari <- adjustedRandIndex(est_labels, true_labels)
+  major_ari <- adjustedRandIndex(
+    est_labels[major_cells], true_labels[major_cells])
+  rare_ari <- adjustedRandIndex(
+    est_labels[rare_cells], true_labels[rare_cells])
+  c(all_ari = all_ari, major_ari = major_ari, rare_ari = rare_ari)
+}
+
+
+#' Reorder the labeling of cell type clusters/spatial domains to
+#' cell types/spatial domains 1, 2, 3, 4 and then order the remaining
+#' redundant clusters/domains based on their cluster/domain size from
+#' large to small. Finally, calculate the proportion. Note this quantity
+#' is specifically used for evaluation in the case of a mis-specified
+#' number of cell types/spatial domains.
+calc_clust_prop <- function(est_labels, true_labels)
+{
+  C <- length(unique(true_labels))
+  C_est <- length(unique(est_labels))
+  C_min <- min(C, C_est)
+  C_max <- max(C, C_est)
+  mtx <- matrix(table(est_labels, true_labels), C_est, C)
+  P <- Variable(C_est, C_est, boolean = T) # row permutation matrix
+  Y <- Variable(C_est, C)
+  problem <- suppressMessages(Problem(
+    Maximize(matrix_trace(Y[1:C_min, 1:C_min])), 
+    list(Y == P %*% mtx, sum_entries(P, axis = 1) == 1, 
+      sum_entries(P, axis = 2) == 1)))
+  result <- suppressMessages(solve(problem))
+  P <- result$getValue(P)
+  mtx <- P %*% mtx
+  order_idx <- order(apply(mtx, 1, sum)[-c(1:C_min)], decreasing = T)
+  mtx <- mtx[c(1:C_min, order_idx+C_min), , drop = F]
+  props <- apply(mtx, 1, sum) / sum(mtx)
+  names(props) <- 1:C_est
+  paste(props, collapse = ",")
+}
+
+
 #' Generate simulated spatial transcriptomic data with splatter package
 #'
-#' Spatial domain labels are based on STARmap (20180417_BZ5_control)
-#' and annotated based on marker genes. Spatial domain labels for section 1 
-#' to section 9 are generated based on the annotated labels.
+#' Spatial domain labels are based on STARmap (20180417_BZ5_control) data
+#' and annotated based on the marker genes. Spatial domain labels for 
+#' section 1 to section 9 are generated based on the annotated labels.
 #'
-#' @param starmap starmap data for inferring simulation parameters, providing
-#'                realistic cell coordinates and spatial domains (eL2/3 cells)
+#' @param starmap STARmap data for inferring simulation parameters and for 
+#'  providing realistic cell coordinates and spatial domains.
 #' @param scenario Simulation scenario (refer to the manuscript for details)
-#' @param C Number of cell types
-#' @param J Number of genes
-#' @param L Number of tissue sections
-#' @param batch_facLoc Batch factor location (refer to splatter package). Zero 
-#'                     if there is no batch effect
+#' @param rare_dist Rare cell types either randomly ditributed across the entire
+#'  tissue section or located in certain spatial domians. 
+#' @param C Number of cell types that consist of 4 major cell types and (C-4)
+#'  rare cell types. Rare cell types together consist of 30% of the total cell 
+#'  population and randomly distribued across the entire tissue region. 
+#'  Each rare cell type consist of 30%/(C-4) of the total cell population.
+#' @param J Number of genes.
+#' @param I Number of randomly selected genes among the J genes to remain in
+#'   the final dataset.
+#' @param L Number of tissue sections.
+#' @param batch_facLoc Batch factor location (refer to the splatter package). 
+#'  Zero if there is no batch effect.
 #' @param de_prop Probability that a gene will be selected to be differentially 
-#'                expressed for each cell type (refer to splatter package)
-#' @param de_facLoc DE factor location (refer to splatter package)
-#' @param de_facScale DE factor scale (refer to splatter package)
-#' @param sim_seed Random seed
-#' @param debug Output DE genes for each cell type
+#'  expressed for each cell type (refer to splatter package).
+#' @param de_facLoc DE factor location (refer to splatter package).
+#' @param de_facScale DE factor scale (refer to splatter package).
+#' @param sim_seed Random seed.
+#' @param debug Output DE genes for each cell type.
 simu <- function(
   starmap,
   scenario, 
+  rare_dist = c("random", "spatial"),
   C, 
-  J, 
+  J,
+  I = NULL,
   L, 
   batch_facLoc, 
   de_prop, 
@@ -241,13 +353,20 @@ simu <- function(
 
   # 1.simulate count data
   noBatch <- ifelse(batch_facLoc == 0, TRUE, FALSE)
+  group_prob <- if(C == 4){
+    rep(0.25, 4)
+  } else if(C > 4){
+    c(rep(0.7 / 4, 4), rep(1 / (C - 4), C - 4) * 0.3)
+  }
   params <- setParams(
     init_params, 
-    batchCells = rep(3 * N, L),
+    batchCells = rep(3 * N, L), # 3N here represents a large number such that
+                                # we have sufficient cells of each type to be 
+                                # allocated to the spatial transcriptomics data
     batch.rmEffect = noBatch,
     batch.facLoc = batch_facLoc,
     nGenes = J,
-    group.prob = rep(1, C) / C,
+    group.prob = group_prob,
     out.prob = 0,
     de.prob = de_prop,
     de.facLoc = de_facLoc,
@@ -257,11 +376,18 @@ simu <- function(
     params = params, 
     method = "groups", 
     verbose = FALSE)
+  if(!is.null(I)){
+    # down-sample J genes to I genes
+    keep_idx <- sort(sample(1:J, I, replace = F))
+    sim_groups <- sim_groups[keep_idx, ]
+  } else{
+    I <- J
+  }
   # remove cells having no expressed genes
   idx_zerosize <- apply(counts(sim_groups), MARGIN = 2, sum) == 0
   sim_groups <- sim_groups[, !idx_zerosize]
 
-  # 2.parse proportion of cells types
+  # 2.parse proportion of cells types in each spatial domain
   if(scenario == 2){
     prop <- c(0.8, 0.1, 0.1)
   } else if(scenario == 3){
@@ -274,12 +400,14 @@ simu <- function(
   sim_cnt <- list()
   for(l in 1:L)
   {
-    # 3.generate cell types
+    # 3.set spatial domain labels
     if(l == 1){
       ztrue <- info$z
     } else{
       ztrue <- info[["slice" %&% (l-1)]]
     }
+    
+    # 4.generate cell types
     c_simu[[l]] <- rep(NA, length(ztrue))
     if(scenario == 1){
       c_simu[[l]] <- ztrue
@@ -287,22 +415,58 @@ simu <- function(
       for(z in unique(info$z))
       {
         zi_idx <- ztrue == z
-        c_simu[[l]][zi_idx] <- sample(map_z2c(z), sum(zi_idx), prob = prop, replace = T)
+        c_simu[[l]][zi_idx] <- sample(map_z2c(z), sum(zi_idx), prob = prop, 
+          replace = T)
+      }
+    } else if(scenario == 5){ # more challenging scenario with rare cell types
+      # assign rare cell types
+      if(rare_dist[1] == "spatial"){
+        rare_idx <- rep(NA, length(ztrue))
+        nrare_each <- round(0.3 / (C - 4) * length(ztrue))
+        for(c in 5:C)
+        {
+          repeat{
+            zi_idx <- sample(unique(info$z), 1) == ztrue
+            zi_noAlloc_idx <- zi_idx & is.na(rare_idx)
+            if(sum(zi_noAlloc_idx) >= nrare_each) break
+          }
+          ci_idx <- sample(which(zi_noAlloc_idx), nrare_each, replace = F)
+          c_simu[[l]][ci_idx] <- c
+          rare_idx[ci_idx] <- TRUE
+        }
+        rare_idx[is.na(rare_idx)] <- FALSE
+      } else if(rare_dist[1] == "random"){
+        rare_idx <- sample(c(TRUE, FALSE), length(ztrue), prob = c(0.3, 0.7), 
+                           replace = T)
+        c_simu[[l]][rare_idx] <- sample(5:C, sum(rare_idx), replace = T)
+      }
+      major_idx <- !rare_idx
+      
+      # assign major cell types using proportion of 
+      # cell types in scenario 3
+      for(z in unique(info$z))
+      {
+        zi_idx <- ztrue == z
+        zi_major_idx <- zi_idx & major_idx
+        c_simu[[l]][zi_major_idx] <- sample(map_z2c(z), sum(zi_major_idx), 
+          prob = c(0.5, 0.25, 0.25), replace = T)
       }
     }
   
-    # 4.assign count data
-    groups <- as.data.frame(colData(sim_groups)) %>% filter(Batch == "Batch" %&% l)
-    sim_cnt[[l]] <- array(NA, c(J, N))
+    # 5.assign count data
+    groups <- as.data.frame(colData(sim_groups)) %>% 
+      filter(Batch == "Batch" %&% l)
+    sim_cnt[[l]] <- array(NA, c(I, N))
     for(c in 1:C)
     {
       c_size <- sum(c_simu[[l]] == c)
-      c_cells <- groups$Cell[grepl(c, groups$Group)]
+      c_cells <- groups$Cell[grepl("Group" %&% c %&% "$", groups$Group)]
       cells_select <- sample(as.character(c_cells), c_size, replace = F)
-      sim_cnt[[l]][, c_simu[[l]] == c] <- as.matrix(counts(sim_groups)[, cells_select])
+      sim_cnt[[l]][, c_simu[[l]] == c] <- 
+        as.matrix(counts(sim_groups)[, cells_select])
     }
     colnames(sim_cnt[[l]]) <- "Cell" %&% 1:N
-    rownames(sim_cnt[[l]]) <- "Gene" %&% 1:J
+    rownames(sim_cnt[[l]]) <- "Gene" %&% 1:I
   }
 
   # return DE genes for each group
@@ -310,7 +474,8 @@ simu <- function(
     de_genes <- list()
     for(c in 1:C)
     {
-      de_genes[[c]] <- rownames(rowData(sim_groups))[rowData(sim_groups)[, "DEFacGroup" %&% c] != 1]
+      de_genes[[c]] <- rownames(rowData(sim_groups))[
+        rowData(sim_groups)[, "DEFacGroup" %&% c] != 1]
     }
     return(list(sim_cnt, c_simu, sim_seed, de_genes))
   }
@@ -320,8 +485,8 @@ simu <- function(
 
 
 #' Run BASS algorithm
-run_BASS <- function(sim_dat, xy, beta_est_approach, beta, C, R,
-  init_method, cov_struc)
+run_BASS <- function(sim_dat, xy, beta_method, beta, C, R,
+  init_method)
 {
   L <- length(sim_dat[[1]])
   xys <- lapply(1:L, function(x) xy)
@@ -333,10 +498,9 @@ run_BASS <- function(sim_dat, xy, beta_est_approach, beta, C, R,
 
   # run algorithms
   BASS <- createBASSObject(sim_cnt, xys, C = C, R = R, 
-    beta_est_approach = beta_est_approach, beta = beta,
-    init_method = init_method, cov_struc = cov_struc,
-    beta_tol = 0.01, burn_in = 5000, samples = 5000)
-  BASS <- BASS.preprocess(BASS, doLogNormalize = T, doPCA = T)
+    init_method = init_method, beta_method = "SW", 
+    beta = beta, tol = 1e-4, burnin = 2000, nsample = 2000)
+  BASS <- BASS.preprocess(BASS)
   BASS <- BASS.run(BASS)
   BASS <- BASS.postprocess(BASS)
 
@@ -344,20 +508,39 @@ run_BASS <- function(sim_dat, xy, beta_est_approach, beta, C, R,
   ztrue <- unlist(info[, 4:(L+3)])
   pi_true <- table(ctrue, ztrue)
   pi_true <- pi_true %*% diag(1 / apply(pi_true, 2, sum))
-  c_est <- BASS@res_postprocess$c_ls
-  z_est <- BASS@res_postprocess$z_ls
-  pi_est <- BASS@res_postprocess$pi_ls
+  c_est <- unlist(BASS@results$c)
+  z_est <- unlist(BASS@results$z)
+  pi_est <- BASS@results$pi
 
-  c_ari <- adjustedRandIndex(ctrue, unlist(c_est))
-  z_ari <- adjustedRandIndex(ztrue, unlist(z_est))
-  pi_est <- match_pi(pi_est, pi_true, unlist(z_est), ztrue)$pi
-  mse_pi <- sqrt(sum((pi_est - pi_true)^2))
-
+  # evaluation
+  c_ari <- eval_ARI(c_est, ctrue)
+  F1 <- eval_F1(c_est, ctrue)
+  MCC <- eval_MCC(c_est, ctrue)
+  z_ari <- adjustedRandIndex(ztrue, z_est)
+  if(C != 4 | R != 4){ # only evaluate in the main simulation
+    pi_est <- NA
+    mse_pi <- NA
+  } else{
+    pi_est <- match_pi(pi_est, pi_true, z_est, ztrue)$pi
+    mse_pi <- sqrt(sum((pi_est - pi_true)^2))
+  }
+  C_est <- length(unique(c_est))
+  R_est <- length(unique(z_est))
+  c_clust_prop <- calc_clust_prop(c_est, ctrue)
+  z_clust_prop <- calc_clust_prop(z_est, ztrue)
+  
   output <- list(
-    c_ari = c_ari, 
-    z_ari = z_ari, 
+    c_ari = c_ari,
+    c_F1 = F1, 
+    c_MCC = MCC,
+    C_est = C_est,
+    c_clust_prop = c_clust_prop,
+    z_ari = z_ari,
+    R_est = R_est,
+    z_clust_prop = z_clust_prop,
     pi_est = pi_est, 
-    mse_pi = mse_pi)
+    mse_pi = mse_pi,
+    beta = BASS@results$beta)
   return(output)
 }
 
@@ -430,6 +613,8 @@ run_HMRF <- function(sim_dat, xy, ztrue, R, case, rep,
   res_dir <- output_folder %&% "/result.spatial.zscore/k_" %&% R
   allbetas <- seq(betas[1], by = betas[2], length = betas[3])
   ari <- list()
+  R_est <- list()
+  z_clust_prop <- list()
   for(beta in allbetas)
   {
     beta <- beta %&% ".0"
@@ -437,18 +622,23 @@ run_HMRF <- function(sim_dat, xy, ztrue, R, case, rep,
       read.table(res_dir %&% "/ftest.beta." %&% beta %&% ".unnormprob.txt", 
         row.names = 1),
       error = function(e) "error",
-      warning = function(w) "warning"
-      )
+      warning = function(w) "warning")
 
     if(!is.data.frame(probs)){
-      return(rep("error", length(allbetas)))
+      out <- list(ari = rep("error", length(allbetas)), 
+        R_est = rep("error", length(allbetas)),
+        z_clust_prop = rep("error", length(allbetas)))
+      return(out)
     } else{
       z_est <- apply(probs, MARGIN = 1, which.max)
       ari[[beta]] <- adjustedRandIndex(ztrue, z_est)
+      R_est[[beta]] <- length(unique(z_est))
+      z_clust_prop[[beta]] <- calc_clust_prop(z_est, ztrue)
     }
   }
   unlink(results_folder, recursive = T)
-  return(unlist(ari))
+  out <- list(ari = ari, R_est = R_est, z_clust_prop = z_clust_prop)
+  return(out)
 }
 
 
@@ -465,7 +655,11 @@ run_BayesSpace <- function(sim_dat, xy, ztrue, R, seed = 0)
     init.method = "mclust", model = "t",
     nrep = 10000, burn.in = 1000)
   z_est <- colData(sce)$spatial.cluster
-  return(adjustedRandIndex(ztrue, z_est))
+  ari <- adjustedRandIndex(ztrue, z_est)
+  R_est <- length(unique(z_est))
+  z_clust_prop <- calc_clust_prop(z_est, ztrue)
+  out <- list(ari = ari, R_est = R_est, z_clust_prop = z_clust_prop)
+  return(out)
 }
 
 
@@ -475,5 +669,9 @@ run_SpaGCN <- function(sim_dat, xy, ztrue, R, p = 0.5)
   sim_cnt <- sim_dat[[1]][[1]]
   xy <- data.frame(xy)
   z_est <- run_SpaGCN_py(t(sim_cnt), xy, R, p)$refined_pred
-  return(adjustedRandIndex(ztrue, z_est))
+  ari <- adjustedRandIndex(ztrue, z_est)
+  R_est <- length(unique(z_est))
+  z_clust_prop <- calc_clust_prop(z_est, ztrue)
+  out <- list(ari = ari, R_est = R_est, z_clust_prop = z_clust_prop)
+  return(out)
 }

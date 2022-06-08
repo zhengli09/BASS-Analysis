@@ -1,7 +1,7 @@
 ---
 title: "Simulation"
 author: "Zheng Li"
-date: "2022-02-06"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output:
   workflowr::wflow_html:
     toc: true
@@ -18,7 +18,7 @@ This page provides code to reproduce all the simulation results for BASS.
 Hopefully, this can also serve as a resource for building up your simulation 
 studies and evaluate your statistical methods.
 
-# Simulation study
+# Main simulation study
 ## Generate simulated data
 The simulation study relies on a few R packages and python softwares
 (e.g. SpaGCN and FICT), which need to be installed beforehand. The specific 
@@ -33,8 +33,8 @@ info <- readRDS("data/simu_info.RDS")
 xy <- as.matrix(info[, c("x", "y")])
 starmap <- list(cnts = cnts, info = info)
 
-# we perform 50 simulation replicates for each setting
-# The random seeds used for each replicate are generated as below
+# we perform 50 simulation replicates under each setting and
+# the random seeds used for each replicate are generated as below
 NREP <- 50
 set.seed(0)
 seeds <- sample(20201230, NREP)
@@ -43,8 +43,8 @@ seeds <- sample(20201230, NREP)
 We generate the simulated data under the baseline simulation setting. Refer to 
 the [params][] file for a complete list of simulation settings.
 ```{r}
-# baseline settings for all four scenarios for the 
-# single tissue section analysis (L = 1)
+# baseline setting of all four scenarios for 
+# the single tissue section analysis (L = 1)
 scenarios <- 1:4 # simulation scenarios
 C <- 4 # number of cell types
 R <- 4 # number of spatial domains
@@ -57,14 +57,14 @@ L <- 1 # number of tissue sections
 rep <- 1
 sim_dats <- lapply(scenarios, function(scenario){
   simu(starmap = starmap, scenario = scenario, C = C, J = J, L = L, 
-       batch_facLoc = 0, de_prop = de_prop, de_facLoc = de_facLoc, 
-       de_facScale = 0.4, sim_seed = seeds[rep], debug = FALSE)
+    batch_facLoc = 0, de_prop = de_prop, de_facLoc = de_facLoc, 
+    de_facScale = 0.4, sim_seed = seeds[rep], debug = FALSE)
 })
 ```
 
 ```{r}
-# The simulated data include a list of L gene expression count matrices,
-# a list of L true cell type label vectors for evaluation purpose, and 
+# The simulated data include an L-list of gene expression count matrices,
+# an L-list of true cell type label vectors for evaluation purpose, and 
 # the random seed used for generating the data
 scenario <- 3
 sim_dat <- sim_dats[[scenario]]
@@ -72,7 +72,7 @@ sim_dat <- sim_dats[[scenario]]
 sim_dat[[1]][[1]][1:5, 1:5]
 ```
 
-## Visualize of the simulated data
+## Visualize the simulated data
 We visualize the cell type distributions under scenarios I-IV. You can refer to 
 [visualization][] for some useful plotting functions or you can write your own 
 code for plotting.
@@ -80,8 +80,8 @@ code for plotting.
 library(cowplot)
 source("code/viz.R")
 p <- lapply(scenarios, function(scenario){
-  plotClusters(xy, labels = sim_dats[[scenario]][[2]][[1]],
-               title = paste("Scenario", c("I", "II", "III", "IV")[scenario]))
+  plotClusters(xy, labels = sim_dats[[scenario]][[2]][[1]], 
+    title = paste("Scenario", c("I", "II", "III", "IV")[scenario]))
 })
 legend <- get_legend(p[[1]] + 
   theme(legend.position = "bottom") +
@@ -92,10 +92,15 @@ plot_grid(p, legend, ncol = 1, rel_heights = c(1, 0.1))
 
 ## Running all methods
 We have wrapped up code for running different methods into different functions. 
-Those functions take in simulated data and output adjusted random index (ARI)
-measuring the estimate cell type or spatial domain labels with the underlying 
-truth. Functions for running different methods can be found at [simulation][].
-We take the simulated data from scenario 3 as an example to illustrate running different methods.
+Those functions take in simulated data and output various evaluation quantities 
+that include the adjusted random index (ARI), $F_1$ score, Matthew's correlation 
+coefficient (MCC), estimated number of cell types/spatial domains, and 
+proportions of cells in each cell type/spatial domain. There, ARI, which was 
+used as a major evaluation metric in our study, measures the similarity between 
+the estimated cell type/spatial domain labels and the underlying truth. 
+Functions for running different methods can be found at [simulation][]. We take 
+the simulated data from scenario 3 as an example to illustrate running different 
+methods.
 ```{r}
 scenario <- 3
 ```
@@ -103,46 +108,56 @@ scenario <- 3
 ### Run BASS
 
 ```{r}
-BASS_out <- run_BASS(sim_dats[[scenario]], xy, "ACCUR_EST", beta = 1, C, R, 
-                     init_method = "kmeans", cov_struc = "EEE")
+BASS_out <- run_BASS(sim_dats[[scenario]], xy, "SW", 
+  beta = 1, C, R, init_method = "kmeans")
+```
+Note that for cell type clustering, we evaluate three metrics that include the 
+ARI, $F_1$-score, and MCC. The three metrics are evaluated in all cells, cells 
+of major types, and cells of rare types. In our main simulation study, we 
+focus on the ARI evaluated in all cells. The other quantities are relevant to 
+the additional simulation studies where we evaluate the influence of rare cell 
+types on the performance of all methods. Refer to the simulation section of our 
+paper for details.
+```{r}
 BASS_out
 ```
 
 ### Run HMRF
-Please note that running HMRF requires you to specify a path for python and will 
+Please note that running HMRF requires you to specify a path to python and will 
 generate intermediate and final results into a specified folder. Please modify 
 those directories accordingly in the `run_HMRF` function if you want to use the 
 function for your own analysis.
-```{r message=FALSE, warning=FALSE}
-# Run HMRF
-# Note that case and rep parameters below are used to generate a unique
-# temporary directories for running HMRF.
+```{r message=FALSE, warning=FALSE, results = 'hide'}
+# Note that case and rep parameters below are used to generate 
+# a unique temporary directories for running HMRF.
 HMRF_out <- run_HMRF(sim_dat, xy, ztrue = info$z, R, case = 3, 
-                     rep, usePCs = F, dosearchSEgenes = T)
+  rep, usePCs = F, dosearchSEgenes = T)
+```
+```{r}
 # ARI for spatial domain detection across different
 # spatial interaction parameter betas.
-HMRF_out
+unlist(HMRF_out$ari)
 ```
 
 ### Run BayesSpace
 Note that BayesSpace cannot identify any neighbors because it was developed for
-analyzing ordered lattice structure of spots from ST and 10x Visium platforms.
+analyzing ordered lattice structure of spots from ST or 10x Visium platform.
 ```{r}
-# Run BayesSpace
 BayesSpace_out <- run_BayesSpace(sim_dat, xy, ztrue = info$z, R)
-# ARI for spatial domain detection
+# ARI for spatial domain detection, estimated number of domains,
+# and proportions of cells in each domain
 BayesSpace_out
 ```
 
 ### Run SpaGCN
-Because SpaGCN was originally developed with Python, we wrapped up the code into 
-a function and have it imported into R such that we can conveniently analyze the 
-simulated data in R. The python function can be found at [simulation][].
+Because SpaGCN was originally developed with Python, we wrapped up the python 
+code into a function and have it imported into R such that we can conveniently 
+analyze the simulated data in R. The python function can be found at [simulation][].
 ```{r}
-# Run SpaGCN
 source_python("code/run_SpaGCN.py")
 SpaGCN_out <- run_SpaGCN(sim_dat, xy, info$z, R)
-# ARI for spatial domain detection
+# ARI for spatial domain detection, estimated number of domains,
+# and proportions of cells in each domain
 SpaGCN_out
 ```
 
@@ -151,34 +166,39 @@ Because Seurat uses a resolution parameter to indirectly determine the number of
 clusters, we run Seurat on a range of resolution parameters and identify the 
 first value that resulted in the desired number of cell types.
 ```{r}
-# Run Seurat
-resolutions <- seq(0.3, 1.5, by = 0.1)
-seu_out <- seu_cluster(sim_dat, resolutions)
-# ARI for cell type clustering and the number of identified clusters 
+resolutions <- seq(0.1, 4, by = 0.1)
+seu_out <- seu_cluster(sim_dat, C, resolutions)
+# ARI, F1-score, and MCC for cell type clustering, 
+# number of identified clusters, and the proportion 
+# of cells in each cell type cluster.
 seu_out
 ```
 
 ### Run SC3
 Note that when the number of cells exceeds 5,000, SC3 randomly selects 5,000 
 cells for clustering, trains a support vector machine with the cluster labels 
-obtained for the 5,000 cells, and then predict the cluster labels of the 
+obtained from the 5,000 cells, and then predict the cluster labels of the 
 remaining cells.
 ```{r}
-# Run SC3
-# Note SC3 algorithm is slow
+# Note that SC3 is slow
 sc3_out <- sc3_cluster(sim_dat, C)
-# ARI for cell type clustering
+# ARI, F1-score, and MCC for cell type clustering, 
+# number of identified clusters, and the proportion 
+# of cells in each cell type cluster.
 sc3_out
 ```
 
 ### Run FICT
-Please install the software according to the [FICT github](https://github.com/haotianteng/FICT) and modify the paths to the FICT 
-software and a temporary folder accordingly in the `fict_cluster` function.
+Please install the software according to the 
+[FICT github](https://github.com/haotianteng/FICT) and modify the paths to the 
+FICT software and a temporary folder accordingly in the `fict_cluster` function.
 ```{r}
-# Note that case and rep parameters below are used to generate a unique
-# temporary directories for running FICT.
+# Note that case and rep parameters below are used to generate 
+# a unique temporary directories for running FICT.
 fict_out <- fict_cluster(sim_dat, xy, C, case = 3, rep)
-# ARI for cell type clustering
+# ARI, F1-score, and MCC for cell type clustering, 
+# number of identified clusters, and the proportion 
+# of cells in each cell type cluster.
 fict_out
 ```
 
@@ -207,12 +227,83 @@ sim_dat <- simu(
   batch_facLoc = 0, de_prop = de_prop, de_facLoc = de_facLoc, 
   de_facScale = 0.4, sim_seed = seeds[rep], debug = FALSE)
 # run BASS
-BASS_out <- run_BASS(sim_dat, xy, "ACCUR_EST", beta = 1, C, R, 
-                     init_method = "kmeans", cov_struc = "EEE")
+BASS_out <- run_BASS(sim_dat, xy, "SW", beta = 1, 
+  C, R, init_method = "kmeans")
 BASS_out
 ```
 
+# Additional simulations
+Besides the main simulations above, we also performed additional simulations to 
+evaluate the influence of various other factors – including the specified number 
+of cell types and spatial domains, rare cell types, and a random exclusion of 
+genes – on method performance. Please check the simulation section of our paper 
+for detailed description of the simulation design. A list of simulation settings 
+and code for running the simulation and for plotting can be found 
+[here](https://github.com/zhengli09/BASS-Analysis/tree/master/code/add_simu).
+## Influence of the specified number of cell types and spatial domains
+```{r message=FALSE, warning=FALSE, results = 'hide'}
+sim_dat <- sim_dats[[scenario]]
+# over-specify the number of cell types (C)
+BASS_overC <- run_BASS(sim_dat, xy, "SW", beta = 1, 
+  C = 10, R = 4, init_method = "kmeans")
+```
+```{r}
+# Note that the proportions of cells in the redundant clusters are 
+# small and the spatial domain detection is only slightly affected
+BASS_overC
+```
+```{r message=FALSE, warning=FALSE, results = 'hide'}
+# over-specify the number of spatial domains (R)
+BASS_overR <- run_BASS(sim_dat, xy, "SW", beta = 1, 
+  C = 4, R = 10, init_method = "kmeans")
+```
+```{r}
+# Note that the proportions of cells in the redundant domains are 
+# small and the cell type clustering is only slightly affected
+BASS_overR
+```
+
+## Influence of rare cell types
+
+```{r}
+# rare_dist = spatial/random indicates that the rare cell types 
+# are either located in specific domains or distributed randomly 
+# across the entire tissue section
+# C = 10/14 (4 major cell types + 6/10 rare cell types)
+# major cell types consist of 70% of cells in the data while
+# rare cell types consist of the remaining 30% of cells
+sim_dat_rare <- simu(starmap, scenario = 5, rare_dist = "spatial",
+  C = 14, J = 200, L = 1, batch_facLoc = 0, de_prop = 0.2, 
+  de_facLoc = 1.1, de_facScale = 0.4, sim_seed = seeds[rep])
+```
+```{r message=FALSE, warning=FALSE, results = 'hide'}
+BASS_rare <- run_BASS(sim_dat_rare, xy, "SW", beta = 1, 
+  C = 14, R = 4, init_method = "kmeans")
+```
+```{r}
+BASS_rare
+```
+
+## Influence of a random exclusion of genes
+
+```{r}
+# I = 100, 200, or 500 indicates the number of retained genes 
+# while the total number of genes is 1000 in the original gene 
+# expression matrix
+sim_dat_rand_excl <- simu(starmap, scenario = 3, C = 4, 
+  J = 1000, I = 200, L = 1, batch_facLoc = 0, de_prop = 0.2, 
+  de_facLoc = 1.1, de_facScale = 0.4, sim_seed = seeds[rep])
+```
+```{r message=FALSE, warning=FALSE, results = 'hide'}
+BASS_rand_excl <- run_BASS(sim_dat_rand_excl, xy, "SW", 
+  beta = 1, C = 4, R = 4, init_method = "kmeans")
+```
+```{r}
+BASS_rand_excl
+```
+
 # Find all the simulation results
-Put the link to all the simulation results here later and plot the two main 
-figures on simulation analysis.
+You can find results for all the simulation studies that include the main 
+simulation study and additional simulation studies 
+[here](https://github.com/zhengli09/BASS-Analysis/tree/master/data/simulation_results). 
 

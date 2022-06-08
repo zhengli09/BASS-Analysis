@@ -1,0 +1,5 @@
+scenario rare_dist C R J de_prop de_facLoc
+5 random 10 4 200 0.2 1.1
+5 spatial 10 4 200 0.2 1.1
+5 random 14 4 200 0.2 1.1
+5 spatial 14 4 200 0.2 1.1

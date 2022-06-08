@@ -1,23 +1,17 @@
 # Author: Zheng Li
 # Date: 2020-11-15
 # Purpose:
-# Simulation analysis for BASS propject with a 
-# single slice as input
-# Log:
-# 2020-12-29: For unknown resons, when submitting jobs to other nodes, only the first replication
-#             has a unique seed. All the other replications have the same seed used to generate
-#             count data. Therefore, modified code to sample NREP seeds at the beginning and use 
-#             those seeds to generate count data. Not a problem when running in local.
-#             Parallel the simulation.
-library(BASS)
+# Main simulation analyses for BASS project with a 
+# single section data as input
+
 library(pbmcapply)
-wkdir <- "~/BASS_pjt/"
+wkdir <- "~/BASS_pjt/1_code/BASS-analysis/"
 setwd(wkdir)
-source("2_simu/simu_utils.R")
+source("code/simu_utils.R")
 
 # data for inferring parameters for splatter
-cnts <- readRDS("data/STARmap/20180417_BZ5_control/processed/cnts.RDS")
-info <- readRDS("data/STARmap/20180417_BZ5_control/processed/info_mult.RDS")
+cnts <- readRDS("data/simu_cnts.RDS")
+info <- readRDS("data/simu_info.RDS")
 xy <- as.matrix(info[, c("x", "y")])
 starmap <- list(cnts = cnts, info = info)
 
@@ -37,17 +31,16 @@ run_main <- function(
   )
 {
   set.seed(seed)
-  seeds <- sample(20201230, NREP) # 20201230
+  seeds <- sample(20201230, NREP)
   filename <- paste0("scenario", scenario, "_C", C, "_R", R, "_J", J,
     "_prop", de_prop, "_de", de_facLoc)
   outfile <- file.path(outdir, filename)
-  cat(filename, "\n")
-  resolutions <- seq(0.3, 1.5, by = 0.1)
-  header <- c("BASS_z", "BASS_c", "HMRF" %&% seq(0, by = 2, length = 26),
-    "BayesSpace", "seu" %&% resolutions, "km", "fict", "mse_pi",
-    "BASS_pi" %&% apply(expand.grid(1:C,1:R), 1, function(x) paste0(x[1], x[2])), 
-    "seed")
-  write.table(t(header), file = outfile, quote = F, col.names = F, row.names = F)
+  header <- c("BASS_z_ari", "BASS_c_ari", "BASS_beta", "BASS_pi_mse",
+    "BASS_pi" %&% apply(expand.grid(1:C, 1:R), 1, paste0, collapse = ""),
+    "seu_ari", "sc3_ari", "fict_ari", "HMRF" %&% seq(0, by = 2, length = 26),
+    "BayesSpace", "seed")
+  write.table(t(header), file = outfile, quote = F, col.names = F, 
+    row.names = F)
 
   verbose <- pbmclapply(1:NREP, function(rep){
       sim_dat <- simu(
@@ -63,22 +56,28 @@ run_main <- function(
         sim_seed = seeds[rep],
         debug = FALSE
         )
-      BASS_out <- run_BASS(sim_dat, xy, "ACCUR_EST", beta = 1, C, R)
+      
+      # run all the methods
+      BASS_out <- run_BASS(sim_dat, xy, "SW", beta = 1, C, R,
+        init_method = "kmeans")
       HMRF_out <- run_HMRF(sim_dat, xy, info$z, R, case, rep,
         usePCs = F, dosearchSEgenes = T)
       BayesSpace_out <- run_BayesSpace(sim_dat, xy, info$z, R)
-      seu_out <- seu_cluster(sim_dat, resolutions)
-      km_out <- km_cluster(sim_dat, C)
+      seu_out <- seu_cluster(sim_dat, C)
+      sc3_out <- sc3_cluster(sim_dat, C)
       fict_out <- fict_cluster(sim_dat, xy, C, case, rep)
 
-      res_out <- c(BASS_out$z_ari, BASS_out$c_ari, HMRF_out, 
-        BayesSpace_out, seu_out, km_out, fict_out, BASS_out$mse_pi, 
-        as.numeric(BASS_out$pi_est), sim_dat[[3]])
+      # output
+      res_out <- c(BASS_out$z_ari, BASS_out$c_ari[1], BASS_out$beta,
+        BASS_out$mse_pi, as.numeric(BASS_out$pi_est), seu_out$metric[1],
+        sc3_out$metric[1], fict_out$metric[1], HMRF_out$ari, 
+        BayesSpace_out$ari, sim_dat[[3]])
       write.table(t(res_out), file = outfile, quote = F, 
         col.names = F, row.names = F, append = T)
     }, mc.cores = cores)
 }
 
 args <- commandArgs(trailingOnly = T)
-run_main(outdir = "2_simu/results/results_single/20211028", cores = 10)
-
+verbose <- run_main(outdir = "~/BASS_pjt/2_simu/results/results_single/20220421", 
+  cores = 10)
+print(verbose) # debug purpose

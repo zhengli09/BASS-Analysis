@@ -240,6 +240,7 @@ genes – on method performance. Please check the simulation section of our pape
 for detailed description of the simulation design. A list of simulation settings 
 and code for running the simulation and for plotting can be found 
 [here](https://github.com/zhengli09/BASS-Analysis/tree/master/code/add_simu).
+
 ## Influence of the specified number of cell types and spatial domains
 ```{r message=FALSE, warning=FALSE, results = 'hide'}
 sim_dat <- sim_dats[[scenario]]

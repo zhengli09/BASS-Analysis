@@ -2,17 +2,25 @@
 # Date: 2021-06-05
 # Visualizations
 #' Plot cell types and each subplot indicates one type
-plotCellTypes <- function(xys, labels, ncol)
+plotCellTypes <- function(xy, labels, cols, ncol, dotsize = 1, ...)
 {
-  df <- data.frame(xys, c = labels)
+  df <- data.frame(xy, c = labels)
   colnames(df) <- c("x", "y", "c")
   ggplot(df, aes(x, y, color = c)) + 
-    geom_point() + 
+    geom_point(size = dotsize) + 
+    gghighlight(unhighlighted_params = aes(...)) +
     facet_wrap(~c, ncol = ncol) +
-    gghighlight() +  
-    theme_void() + 
-    coord_fixed() +
-    scale_color_viridis_d("c") 
+    theme_bw() +
+    theme(
+      panel.grid = element_blank(),
+      axis.ticks = element_blank(),
+      axis.text = element_blank(),
+      axis.title = element_text(face = "bold"),
+      legend.position = "none"
+    ) +
+    xlab("x coordinates") +
+    ylab("y coordinates") +
+    scale_color_manual(values = cols)
 }
 
 
@@ -88,7 +96,7 @@ plotMkrs <- function(cnts, markers, labels, legend_title, scale = T)
 }
 
 
-#' cell type compositon matrix
+#' plot cell type compositon matrix
 plotCellTypeComp <- function(mtx)
 {
   df <- data.frame(
@@ -115,7 +123,29 @@ plotCellTypeComp <- function(mtx)
 }
 
 
-#' plot cell types or tissue structures
+#' plot cell type composition bars
+plotCellTypeCompBar <- function(pi_mtx, cols, nrow)
+{
+  df <- data.frame(pi_mtx, check.names = F) %>%
+    mutate(type = rownames(pi_mtx)) %>%
+    gather("domain", "proportion", colnames(pi_mtx)) %>%
+    mutate(type = factor(type, levels = rownames(pi_mtx)))
+  ggplot(df, aes(x = domain, y = proportion, fill = type)) +
+    geom_col(position = position_stack(reverse = TRUE)) +
+    scale_fill_manual("Cell type", values = cols) +
+    theme_bw() +
+    theme(
+      legend.position = "bottom",
+      panel.grid = element_blank(),
+      axis.title = element_text(face = "bold")) +
+    guides(fill = guide_legend(nrow = nrow, byrow = T)) +
+    xlab("Spatial domains") +
+    ylab("Cell type proportions") +
+    coord_flip()
+}
+
+
+#' plot cell types or spatial domains
 plotClusters <- function(
   xy, 
   labels, 
@@ -146,6 +176,29 @@ plotClusters <- function(
       legend.position = "none"
       ) + 
     coord_fixed(ratio)
+}
+
+
+#' plot cell types or spatial domains in a facet
+plotClustersFacet <- function(xys, labels, smp_names, size = 1)
+{
+  df <- lapply(1:length(xys), function(l){
+    df.l <- data.frame(xys[[l]], labels[[l]], smp_names[l])
+    colnames(df.l) <- c("x", "y", "z", "sample")
+    df.l
+  })
+  df <- do.call(rbind, df)
+  df$sample <- factor(df$sample, smp_names)
+  ggplot(df, aes(x, y, color = z)) +
+    geom_point(size = size) +
+    facet_grid(~sample) +
+    theme_bw() +
+    theme(
+      legend.position = "bottom",
+      axis.title = element_blank(),
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      panel.grid = element_blank())
 }
 
 

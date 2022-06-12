@@ -33,6 +33,7 @@ library(BASS)
 ```
 
 # Workflow
+Find the data [here](https://github.com/zhengli09/BASS-Analysis/tree/master/data).
 ```{r}
 load("data/starmap_mpfc.RData") # starmap_cnts, starmap_info
 ```

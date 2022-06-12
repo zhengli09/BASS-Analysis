@@ -1,7 +1,7 @@
 ---
-title: "STARmap (Wang et al., 2018) analysis"
+title: "Mouse mPFC data by STARmap (Wang et al., 2018)"
 author: "Zheng Li"
-date: "2022-02-24"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
 output: 
   workflowr::wflow_htlm:
     toc: true
@@ -10,181 +10,86 @@ editor_options:
 ---
 
 # Introduction
-Here, we apply BASS to analyze the STARmap mPFC (mouse medial prefrontal cortex) 
-dataset from [Wang et al., 2018](https://www.science.org/doi/10.1126/science.aat5691). 
-For single-sample analysis, we focus on the tissue section BZ5. For multi-sample 
-analysis, we focus on tissue sections BZ5, BZ9 and BZ14 that were measured on the 
-mPFC region of different mice. The original data can be downloaded from 
-[here](https://www.starmapresources.org/data). We excluded cells that are annotated 
-to be "NA" class by the original study as they were not confidently identified to 
-be any cell type. Finally, we obtained the same set of 166 genes measured on 
-1,049 (BZ5), 1,053 (BZ9), and 1,088 (BZ14) cells along with their centroid 
-coordinates for the following analysis. The processed data can be download from 
-the [data directory](https://github.com/zhengli09/BASS-Analysis/tree/master/data). 
+Here, we apply BASS to analyze the mouse medial prefrontal cortex (mPFC) data by 
+the STARmap spatial transcriptomic technology from 
+[Wang et al., 2018](https://www.science.org/doi/10.1126/science.aat5691). We 
+focus on the tissue sections BZ5, BZ9 and BZ14 that were measured on the mPFC 
+region of different mice. The original data can be downloaded from 
+[here](https://www.starmapresources.org/data). We excluded cells 
+that were annotated to be "NA" class by the original study as they were not 
+confidently identified to be any cell type. Finally, we obtained the same set of 
+166 genes measured on 1,049 (BZ5), 1,053 (BZ9), and 1,088 (BZ14) cells along 
+with their centroid coordinates for the downstream analysis. We manually 
+annotated the three samples with spatial domain labels, allowing us to 
+quantitatively evaluate different methods with ARI. There, the manual annotation 
+of spatial domains was based on the spatial expression of marker genes and the 
+histology diagram of the mouse brain from the 
+[Allen brain atlas](https://mouse.brain-map.org/static/atlas). The processed 
+data and manual annotations can be found at the 
+[data directory](https://github.com/zhengli09/BASS-Analysis/tree/master/data). 
 For detailed usage of all the functions, please refer to the software tutorial 
 section.
 
 ```{r error=FALSE,message=FALSE}
 library(BASS)
+library(Seurat)
+library(tidyverse)
+# starmap_cnts, starmap_info
 load("data/starmap_mpfc.RData")
 ```
 
-# Single-sample analysis
-## Load data and set hyper-parameters
+# Load data and set hyper-parameters
 ```{r}
-# We focus on the tissue section BZ5 in the single-sample analysis
-cnts <- starmap_cnts["20180417_BZ5_control"] # 166x1049 count data
-info <- starmap_info["20180417_BZ5_control"]
-xy <- lapply(info, function(info.i){
-  as.matrix(info.i[, c("x", "y")]) # 1049x2 spatial coordinates
-})
-cnts[[1]][1:5,1:5]
-head(xy[[1]])
+cnts <- starmap_cnts # a list of gene expression count matrices
+xys <- lapply(starmap_info, function(info.i){
+  as.matrix(info.i[, c("x", "y")])
+}) # a list of spatial coordinates matrices
+cnts[["20180417_BZ5_control"]][1:5,1:5]
+head(xys[["20180417_BZ5_control"]])
 # hyper-parameters
 C <- 15 # number of cell types
 R <- 4 # number of spatial domains
 ```
 
-## Run BASS
+# Run BASS
 ```{r}
 set.seed(0)
 # Set up BASS object
-BASS <- createBASSObject(cnts, xy, C = C, R = R, 
-  beta_est_approach = "ACCUR_EST", 
-  burn_in = 10000, samples = 10000)
+BASS <- createBASSObject(cnts, xys, C = C, R = R, beta_method = "SW")
 
 # Data pre-processing:
 # 1.Library size normalization followed with a log2 transformation
 # 2.Dimension reduction with PCA after standardizing all the genes
+# 3.Batch effect adjustment using the Harmony package
 BASS <- BASS.preprocess(BASS, doLogNormalize = TRUE, 
   doPCA = TRUE, scaleFeature = TRUE, nPC = 20)
 
 # Run BASS algorithm
 BASS <- BASS.run(BASS)
 ```
+```{r fig.height=4.5, fig.width=4.5}
+# The spatial parameter beta has converged
+# after checking the trace plot of beta
+plot(1:BASS@burnin, BASS@samples$beta, xlab = "Iteration", 
+  ylab = expression(beta), type = "l")
+```
 
-```{r message = FALSE, warning = FALSE}
-# post-process posterior samples:
+```{r}
+# Post-process posterior samples:
 # 1.Adjust for label switching with the ECR-1 algorithm
 # 2.Summarize the posterior samples to obtain the cell type labels, spatial 
-#   domain labels, and cell type proportion matrix estimate
+#   domain labels, and the cell type proportion matrix
 BASS <- BASS.postprocess(BASS)
-clabels <- BASS@res_postprocess$c_ls # cell type clusters
-zlabels <- BASS@res_postprocess$z_ls # spatial domain labels
-pi_est <- BASS@res_postprocess$pi_ls # cell type composition matrix
+clabels <- BASS@results$c # cell type clusters
+zlabels <- BASS@results$z # spatial domain labels
+pi_est <- BASS@results$pi # cell type composition matrix
 ```
 
-## Annotate cell types
-```{r error=FALSE,message=FALSE}
-library(Seurat)
-library(dplyr)
-```
-```{r}
-l <- 1 # tissue section number
-# Perform DE analysis with Seurat
-seu_obj <- CreateSeuratObject(counts = cnts[[l]], min.cells = 1)
-seu_obj <- NormalizeData(seu_obj)
-seu_obj <- ScaleData(seu_obj, features = rownames(seu_obj))
-seu_obj <- RunPCA(seu_obj, features = rownames(seu_obj), verbose = F)
-Idents(seu_obj) <- factor(clabels[[l]])
-markers <- FindAllMarkers(seu_obj, only.pos = T, 
-  min.pct = 0, logfc.threshold = 0, verbose = F)
-top5 <- markers %>%
-  group_by(cluster) %>%
-  top_n(n = 5, wt = avg_logFC)
-subset(top5, cluster == 7) # Markers of eL2/3 cells
-
-# By checking the top DE genes of each cell type cluster, 
-# we annotate specific cell types for each cluster
-cTypes <- c("eL5d", "eL6", "OPC", "eL5c", "eL5a", 
-  "Astro", "eL2/3", "Reln", "SST-Lhx6", "eL5b", 
-  "Smc", "Micro", "Smc-Astro", "Oligo", "VIP")
-clabels_l <- factor(clabels[[l]])
-levels(clabels_l) <- cTypes
-```
-
-## Visualization
-You can refer to 
-[visualization](https://github.com/zhengli09/BASS-Analysis/tree/master/code/viz.R) 
-for some useful plotting functions or you can write your own code for plotting.
-```{r}
-library(ggplot2)
-source("code/viz.R")
-# Spatial domains
-zlabels_l <- factor(zlabels[[l]])
-levels(zlabels_l) <- c("L2/3", "L1", "L6", "L5")
-zlabels_l <- factor(zlabels_l, c("L1", "L2/3", "L5", "L6"))
-plotClusters(xy[[l]], labels = zlabels_l, title = "Spatial domains") +
-  theme(legend.position = "bottom")
-```
-```{r error=FALSE,message=FALSE,fig.height=4, fig.width=8.5}
-# Cell types
-library(gghighlight)
-clabels_l <- factor(clabels_l, levels = c(
-  "eL2/3", "eL5a", "eL5b", "eL5c", "eL5d", "eL6",
-  "Reln", "VIP", "SST-Lhx6",
-  "Oligo", "Smc", "Astro", "Smc-Astro", "Micro", "OPC")
-  )
-plotCellTypes(xy, clabels_l, ncol = 5) + 
-  ggtitle("Spatial distribution of cell types") +
-  theme(plot.title = element_text(hjust = 0.5))
-```
-
-```{r fig.height=3, fig.width=3}
-# Cell type compositions in each spatial domain
-pi_est <- BASS@res_postprocess$pi_ls
-pi_est <- pi_est[match(levels(clabels_l), cTypes), c(2, 1, 4, 3)]
-rownames(pi_est) <- levels(clabels_l)
-colnames(pi_est) <- levels(zlabels_l)
-plotCellTypeComp(pi_est)
-```
-
-# Multi-sample analysis
-## Load data and set hyper-parameters
-```{r}
-# We use all the three tissue sections: BZ5, BZ9, and BZ14 in 
-# the multi-sample analysis
-xy <- lapply(starmap_info, function(info.i){
-  as.matrix(info.i[, c("x", "y")]) # spatial coordinates
-})
-cnts <- starmap_cnts # count matrices for three tissue sections
-# hyper-parameters
-C <- 15 # number of cell types
-R <- 4 # number of spatial domains
-```
-
-## Run BASS
-```{r}
-set.seed(0)
-# Set up BASS object
-BASS <- createBASSObject(cnts, xy, C = C, R = R, 
-  beta_est_approach = "ACCUR_EST", 
-  burn_in = 10000, samples = 10000)
-
-# Data pre-processing:
-# In addition to the log-normalization and dimension reduction with
-# PCA, we also conduct a batch effect adjustment using the Harmony
-# package.
-BASS <- BASS.preprocess(BASS, doLogNormalize = TRUE, 
-  doPCA = TRUE, scaleFeature = TRUE, nPC = 20)
-
-# Run BASS algorithm
-BASS <- BASS.run(BASS)
-```
-
-```{r message = FALSE, warning = FALSE}
-# post-process posterior samples:
-BASS <- BASS.postprocess(BASS)
-clabels <- BASS@res_postprocess$c_ls # cell type clusters
-zlabels <- BASS@res_postprocess$z_ls # spatial domain labels
-pi_est <- BASS@res_postprocess$pi_ls # cell type composition matrix
-```
-
-## Annotate cell types
+# Annotate cell types
 ```{r}
 # Perform DE analysis with Seurat
 cnts_all <- do.call(cbind, cnts)
-seu_obj <- CreateSeuratObject(counts = cnts_all, min.cells = 1)
+seu_obj <- CreateSeuratObject(counts = cnts_all)
 seu_obj <- NormalizeData(seu_obj)
 seu_obj <- ScaleData(seu_obj, features = rownames(seu_obj))
 seu_obj <- RunPCA(seu_obj, features = rownames(seu_obj), verbose = F)
@@ -194,15 +99,13 @@ markers <- FindAllMarkers(seu_obj, only.pos = T,
 top5 <- markers %>%
   group_by(cluster) %>%
   top_n(n = 5, wt = avg_logFC)
-subset(top5, cluster == 7) # Markers of eL6a cells
-subset(top5, cluster == 3) # Markers of eL6b cells
 
-# By checking the top DE genes of each cell type cluster, we annotate 
-# specific cell types for each cluster
+# By checking the top DE genes of each cell type cluster, 
+# we annotate specific cell types for each cluster
 cTypes <- c(
-  "Lhx6", "Micro", "eL6b", "eL5d", "eL2/3", 
-  "Oligo", "eL6a", "eL5c", "Smc", "eL5a", 
-  "eL5b", "Astro", "SST", "VIP", "Reln")
+  "eL5d", "Astro", "Micro", "Lhx6", "eL6a",
+  "eL2/3", "eL5c", "Smc", "eL6b", "eL5b",
+  "eL5a", "Oligo", "SST", "Reln", "VIP")
 clabels <- lapply(clabels, function(clabels.l){
   clabels.l <- factor(clabels.l)
   levels(clabels.l) <- cTypes
@@ -214,48 +117,67 @@ clabels <- lapply(clabels, function(clabels.l){
 })
 ```
 
-## Visualization
-```{r, fig.height=2.5, fig.width=9}
-# Spatial domains
-library(cowplot)
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
+    Top DE genes for each cell type cluster
+  </a>
+</p>
+<div class="collapse" id="collapseExample1">
+  <div class="card card-body">
+
+  ```{r}
+  data.frame(top5)
+  ```
+
+  </div>
+</div>
+
+# Visualization
+You can refer to 
+[visualization](https://github.com/zhengli09/BASS-Analysis/tree/master/code/viz.R) 
+for some useful plotting functions or you can write your own code for plotting.
+```{r message=FALSE}
+source("code/viz.R")
+```
+
+## Spatial domains
+```{r fig.height=2.3, fig.width=7.5}
 zlabels <- lapply(zlabels, function(zlabels.l){
   zlabels.l <- factor(zlabels.l)
   levels(zlabels.l) <- c("L6", "L5", "L2/3", "L1")
   zlabels.l <- factor(zlabels.l, levels = c("L1", "L2/3", "L5", "L6"))
 })
-plist <- lapply(1:length(zlabels), function(i){
-  title.i <- c("BZ5", "BZ9", "BZ14")[i]
-  plotClusters(xy[[i]], labels = zlabels[[i]], title = title.i)
-})
-plot_grid(plotlist = plist, ncol = 3)
+cols <-  c("#e07a5f", "#3d405b", "#81b29a", "#f2cc8f")
+plotClustersFacet(xys, zlabels, c("BZ5", "BZ9", "BZ14"), size = 0.7) +
+  scale_color_manual("Domain", values = cols)
 ```
 
-```{r message=FALSE, warning=FALSE, fig.height=5, fig.width=8.5}
-# Cell types
-library(RColorBrewer)
-getPalette <- colorRampPalette(brewer.pal(8, "Dark2"))
-plist <- lapply(1:length(clabels), function(i){
-  title.i <- c("BZ5", "BZ9", "BZ14")[i]
-  plotClusters(xy[[i]], labels = clabels[[i]], title.i) +
-  scale_colour_manual("Cell types", values = getPalette(15))
-})
-legend <- get_legend(plist[[1]] + theme(legend.position = "bottom"))
-plist <- append(plist, list(legend) , 3)
-plot_grid(plotlist = plist, ncol = 2)
-```
-```{r error=FALSE,message=FALSE,fig.height=4, fig.width=8.5}
-# Spatial distribution of cell types on tissue section BZ5
-l <- 1
-plotCellTypes(xy[[l]], clabels[[l]], ncol = 5) +
-  scale_colour_manual("Cell types", values = getPalette(15))
+## Cell types
+```{r fig.height=2.8, fig.width=8}
+cols <- c("#98c1d9","#2a9d8f","#e9c46a","#f4a261","#e76f51",
+  "#234888", "#a8dadc","#b388eb","#bb3e03","#52b69a",
+  "#e9d8a6", "#f19c79", "#DBC9D8", "#A4277C", "#D79739")
+plotClustersFacet(xys, clabels, c("BZ5", "BZ9", "BZ14"), size = 0.5) +
+  scale_color_manual("Type", values = cols) +
+  guides(color = guide_legend(byrow = T, nrow = 2,
+    override.aes = list(size = 2)))
 ```
 
-```{r fig.height=3, fig.width=3}
-# Cell type compositions in each spatial domain
-pi_est <- BASS@res_postprocess$pi_ls
-pi_est <- pi_est[match(levels(clabels[[l]]), cTypes), c(4, 3, 2, 1)]
-rownames(pi_est) <- levels(clabels[[l]])
-colnames(pi_est) <- levels(zlabels[[l]])
-plotCellTypeComp(pi_est)
+## Spatial distribution of cell types on the tissue section BZ5
+```{r message=FALSE, warning=FALSE, fig.height=3.5, fig.width=7}
+library(gghighlight)
+plotCellTypes(xys[[1]], clabels[[1]], cols, ncol = 5, dotsize = 0.7,
+  size = 0.5, alpha = 0.5)
+```
+
+## Cell type compositions in each spatial domain
+```{r fig.height=3, fig.width=7}
+# adjust order of labeling
+pi_est <- pi_est[match(
+  levels(clabels[[1]]), cTypes),
+  c(4,3,2,1)]
+colnames(pi_est) <- c("L1", "L2/3", "L5", "L6")
+rownames(pi_est) <- levels(clabels[[1]])
+plotCellTypeCompBar(pi_est, cols, nrow = 2)
 ```
 

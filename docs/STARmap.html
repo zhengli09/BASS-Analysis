@@ -11,9 +11,9 @@
 
 <meta name="author" content="Zheng Li" />
 
-<meta name="date" content="2022-02-24" />
+<meta name="date" content="2022-06-12" />
 
-<title>STARmap (Wang et al., 2018) analysis</title>
+<title>Mouse mPFC data by STARmap (Wang et al., 2018)</title>
 
 <script src="site_libs/header-attrs-2.12.1/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -368,7 +368,7 @@ div.tocify {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/zhengli09/BASS-analysis">
+  <a href="https://github.com/zhengli09//BASS-analysis">
     <span class="fab fa-github"></span>
      
     Source code
@@ -383,16 +383,19 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">STARmap (Wang et al., 2018) analysis</h1>
+<h1 class="title toc-ignore">Mouse mPFC data by STARmap (Wang et al.,
+2018)</h1>
 <h4 class="author">Zheng Li</h4>
-<h4 class="date">2022-02-24</h4>
+<h4 class="date">2022-06-12</h4>
 
 </div>
 
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -401,7 +404,9 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -410,17 +415,27 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-03-05
+<strong>Last updated:</strong> 2022-06-12
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>BASS-analysis/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>BASS-analysis/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version 1.7.0). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -429,99 +444,146 @@ This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a> analysi
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed0code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(0)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed0code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(0)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed0code" class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed0code"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(0)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(0)</code> was run prior to running the
+code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistreec049bd257c5ef06011c55c91609d32f0367639eetargetblankc049bd2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/zhengli09/BASS-analysis/tree/c049bd257c5ef06011c55c91609d32f0367639ee" target="_blank">c049bd2</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree829d10c5addeb411ad5deb4dea9f3ff3e8d79d97targetblank829d10ca">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/zhengli09//BASS-analysis/tree/829d10c5addeb411ad5deb4dea9f3ff3e8d79d97" target="_blank">829d10c</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistreec049bd257c5ef06011c55c91609d32f0367639eetargetblankc049bd2a" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree829d10c5addeb411ad5deb4dea9f3ff3e8d79d97targetblank829d10ca"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/zhengli09/BASS-analysis/tree/c049bd257c5ef06011c55c91609d32f0367639ee" target="_blank">c049bd2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/zhengli09//BASS-analysis/tree/829d10c5addeb411ad5deb4dea9f3ff3e8d79d97" target="_blank">829d10c</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
-Untracked files:
-    Untracked:  analysis/DLPFC.Rmd
-
+working directory clean
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -532,7 +594,12 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/STARmap.Rmd</code>) and HTML (<code>docs/STARmap.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/STARmap.Rmd</code>) and HTML
+(<code>docs/STARmap.html</code>) files. If you’ve configured a remote
+Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -561,7 +628,41 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/c049bd257c5ef06011c55c91609d32f0367639ee/analysis/STARmap.Rmd" target="_blank">c049bd2</a>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/829d10c5addeb411ad5deb4dea9f3ff3e8d79d97/analysis/STARmap.Rmd" target="_blank">829d10c</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-06-12
+</td>
+<td>
+Update real data analysis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zhengli09//BASS-analysis/67aecc1b77b3c5af9b21c713d8abf11da6dc6954/docs/STARmap.html" target="_blank">67aecc1</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-03-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/8f34a273f0fb57b1f526da9124ac879aca87974f/analysis/STARmap.Rmd" target="_blank">8f34a27</a>
 </td>
 <td>
 zhengli09
@@ -578,7 +679,7 @@ Add MERFISH analysis
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zhengli09/BASS-analysis/79177d12830d8512a21f969ae4cc6abd9a92b8df/docs/STARmap.html" target="_blank">79177d1</a>
+<a href="https://rawcdn.githack.com/zhengli09//BASS-analysis/79177d12830d8512a21f969ae4cc6abd9a92b8df/docs/STARmap.html" target="_blank">79177d1</a>
 </td>
 <td>
 zhengli09
@@ -595,7 +696,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/9044081553486614c1ecfa4909655b16758e83d5/analysis/STARmap.Rmd" target="_blank">9044081</a>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/9044081553486614c1ecfa4909655b16758e83d5/analysis/STARmap.Rmd" target="_blank">9044081</a>
 </td>
 <td>
 zhengli09
@@ -612,7 +713,7 @@ Modify links in STARmap.Rmd
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zhengli09/BASS-analysis/a27dd42cad44fadeffe07751ac770d859d28a83f/docs/STARmap.html" target="_blank">a27dd42</a>
+<a href="https://rawcdn.githack.com/zhengli09//BASS-analysis/a27dd42cad44fadeffe07751ac770d859d28a83f/docs/STARmap.html" target="_blank">a27dd42</a>
 </td>
 <td>
 zhengli09
@@ -629,7 +730,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/ada7b84d38930e62d40ec33e901390ceb4a2b81f/analysis/STARmap.Rmd" target="_blank">ada7b84</a>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/ada7b84d38930e62d40ec33e901390ceb4a2b81f/analysis/STARmap.Rmd" target="_blank">ada7b84</a>
 </td>
 <td>
 zhengli09
@@ -646,7 +747,7 @@ Modify links
 html
 </td>
 <td>
-<a href="https://rawcdn.githack.com/zhengli09/BASS-analysis/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/STARmap.html" target="_blank">9a68511</a>
+<a href="https://rawcdn.githack.com/zhengli09//BASS-analysis/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/STARmap.html" target="_blank">9a68511</a>
 </td>
 <td>
 zhengli09
@@ -663,7 +764,7 @@ Build site.
 Rmd
 </td>
 <td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/4ec8df1262087c7c78f682e56014a7087a756d4f/analysis/STARmap.Rmd" target="_blank">4ec8df1</a>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/4ec8df1262087c7c78f682e56014a7087a756d4f/analysis/STARmap.Rmd" target="_blank">4ec8df1</a>
 </td>
 <td>
 zhengli09
@@ -684,28 +785,47 @@ Publish the introduction, simulation analysis and STARmap analysis
 </div>
 <div id="introduction" class="section level1">
 <h1>Introduction</h1>
-<p>Here, we apply BASS to analyze the STARmap mPFC (mouse medial prefrontal cortex) dataset from <a href="https://www.science.org/doi/10.1126/science.aat5691">Wang et al., 2018</a>. For single-sample analysis, we focus on the tissue section BZ5. For multi-sample analysis, we focus on tissue sections BZ5, BZ9 and BZ14 that were measured on the mPFC region of different mice. The original data can be downloaded from <a href="https://www.starmapresources.org/data">here</a>. We excluded cells that are annotated to be “NA” class by the original study as they were not confidently identified to be any cell type. Finally, we obtained the same set of 166 genes measured on 1,049 (BZ5), 1,053 (BZ9), and 1,088 (BZ14) cells along with their centroid coordinates for the following analysis. The processed data can be download from the <a href="https://github.com/zhengli09/BASS-Analysis/tree/master/data">data directory</a>. For detailed usage of all the functions, please refer to the software tutorial section.</p>
+<p>Here, we apply BASS to analyze the mouse medial prefrontal cortex
+(mPFC) data by the STARmap spatial transcriptomic technology from <a
+href="https://www.science.org/doi/10.1126/science.aat5691">Wang et al.,
+2018</a>. We focus on the tissue sections BZ5, BZ9 and BZ14 that were
+measured on the mPFC region of different mice. The original data can be
+downloaded from <a
+href="https://www.starmapresources.org/data">here</a>. We excluded cells
+that were annotated to be “NA” class by the original study as they were
+not confidently identified to be any cell type. Finally, we obtained the
+same set of 166 genes measured on 1,049 (BZ5), 1,053 (BZ9), and 1,088
+(BZ14) cells along with their centroid coordinates for the downstream
+analysis. We manually annotated the three samples with spatial domain
+labels, allowing us to quantitatively evaluate different methods with
+ARI. There, the manual annotation of spatial domains was based on the
+spatial expression of marker genes and the histology diagram of the
+mouse brain from the <a
+href="https://mouse.brain-map.org/static/atlas">Allen brain atlas</a>.
+The processed data and manual annotations can be found at the <a
+href="https://github.com/zhengli09/BASS-Analysis/tree/master/data">data
+directory</a>. For detailed usage of all the functions, please refer to
+the software tutorial section.</p>
 <pre class="r"><code>library(BASS)
+library(Seurat)
+library(tidyverse)
+# starmap_cnts, starmap_info
 load(&quot;data/starmap_mpfc.RData&quot;)</code></pre>
 </div>
-<div id="single-sample-analysis" class="section level1">
-<h1>Single-sample analysis</h1>
-<div id="load-data-and-set-hyper-parameters" class="section level2">
-<h2>Load data and set hyper-parameters</h2>
-<pre class="r"><code># We focus on the tissue section BZ5 in the single-sample analysis
-cnts &lt;- starmap_cnts[&quot;20180417_BZ5_control&quot;] # 166x1049 count data
-info &lt;- starmap_info[&quot;20180417_BZ5_control&quot;]
-xy &lt;- lapply(info, function(info.i){
-  as.matrix(info.i[, c(&quot;x&quot;, &quot;y&quot;)]) # 1049x2 spatial coordinates
-})
-cnts[[1]][1:5,1:5]</code></pre>
+<div id="load-data-and-set-hyper-parameters" class="section level1">
+<h1>Load data and set hyper-parameters</h1>
+<pre class="r"><code>cnts &lt;- starmap_cnts # a list of gene expression count matrices
+xys &lt;- lapply(starmap_info, function(info.i){
+  as.matrix(info.i[, c(&quot;x&quot;, &quot;y&quot;)])
+}) # a list of spatial coordinates matrices
+cnts[[&quot;20180417_BZ5_control&quot;]][1:5,1:5]</code></pre>
 <pre><code>        69x4486 93x1063 143x3445 88x4092 120x4293
 Acss1         0       0        0       0        0
 Adcyap1       0       3        0       0        0
 Adgrl2        0       0       16       1        7
 Aqp4          0       0        8      11       32
 Arc           3       3        1       5        0</code></pre>
-<pre class="r"><code>head(xy[[1]])</code></pre>
+<pre class="r"><code>head(xys[[&quot;20180417_BZ5_control&quot;]])</code></pre>
 <pre><code>                 x        y
 69x4486   68.86374 4486.029
 93x1063   92.84376 1062.676
@@ -717,211 +837,183 @@ Arc           3       3        1       5        0</code></pre>
 C &lt;- 15 # number of cell types
 R &lt;- 4 # number of spatial domains</code></pre>
 </div>
-<div id="run-bass" class="section level2">
-<h2>Run BASS</h2>
+<div id="run-bass" class="section level1">
+<h1>Run BASS</h1>
 <pre class="r"><code>set.seed(0)
 # Set up BASS object
-BASS &lt;- createBASSObject(cnts, xy, C = C, R = R, 
-  beta_est_approach = &quot;ACCUR_EST&quot;, 
-  burn_in = 10000, samples = 10000)</code></pre>
+BASS &lt;- createBASSObject(cnts, xys, C = C, R = R, beta_method = &quot;SW&quot;)</code></pre>
 <pre><code>***************************************
-  Bayesian Analytics for Spatial Segmentation (BASS)
-  Authors: Zheng Li, Xiang Zhou
-  Affiliate: Department of Biostatistics, University of Michigan
   INPUT INFO:
-    - Number of samples: 1 
-    - Number of spots/cells: 1049 
+    - Number of tissue sections: 3 
+    - Number of cells/spots: 1049 1053 1088 
     - Number of genes: 166 
-    - Potts interaction parameter estimation approach: ACCUR_EST 
-    - Variance-covariance structure of gene expression features: EEE 
+    - Potts interaction parameter estimation method: SW 
+      - Estimate Potts interaction parameter with SW algorithm
   To list all hyper-parameters, Type listAllHyper(BASS_object)
 ***************************************</code></pre>
 <pre class="r"><code># Data pre-processing:
 # 1.Library size normalization followed with a log2 transformation
 # 2.Dimension reduction with PCA after standardizing all the genes
+# 3.Batch effect adjustment using the Harmony package
 BASS &lt;- BASS.preprocess(BASS, doLogNormalize = TRUE, 
   doPCA = TRUE, scaleFeature = TRUE, nPC = 20)</code></pre>
 <pre><code>***** Log-normalize gene expression data *****
 ***** Exclude genes with 0 expression *****
-***** Reduce data dimension with PCA *****</code></pre>
+***** Reduce data dimension with PCA *****
+***** Correct batch effect with Harmony *****</code></pre>
 <pre class="r"><code># Run BASS algorithm
 BASS &lt;- BASS.run(BASS)</code></pre>
-<pre class="r"><code># post-process posterior samples:
+<pre class="r"><code># The spatial parameter beta has converged
+# after checking the trace plot of beta
+plot(1:BASS@burnin, BASS@samples$beta, xlab = &quot;Iteration&quot;, 
+  ylab = expression(beta), type = &quot;l&quot;)</code></pre>
+<p><img src="figure/STARmap.Rmd/unnamed-chunk-4-1.png" width="432" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Post-process posterior samples:
 # 1.Adjust for label switching with the ECR-1 algorithm
 # 2.Summarize the posterior samples to obtain the cell type labels, spatial 
-#   domain labels, and cell type proportion matrix estimate
+#   domain labels, and the cell type proportion matrix
 BASS &lt;- BASS.postprocess(BASS)</code></pre>
-<pre><code>
-    ......................................................................................
-    . Method                         Time (sec)           Status                         . 
-    ......................................................................................
-    . ECR-ITERATIVE-1                60.101               Converged (3 iterations)       . 
-    ......................................................................................
-
-    Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
-    Retrieve the 1 permutation arrays by typing:
-        [...]$permutations$&quot;ECR-ITERATIVE-1&quot;
-    Retrieve the 1 best clusterings: [...]$clusters
-    Retrieve the 1 CPU times: [...]$timings
-    Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 64 seconds. 
-
-    ......................................................................................
-    . Method                         Time (sec)           Status                         . 
-    ......................................................................................
-    . ECR-ITERATIVE-1                22.058               Converged (2 iterations)       . 
-    ......................................................................................
-
-    Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
-    Retrieve the 1 permutation arrays by typing:
-        [...]$permutations$&quot;ECR-ITERATIVE-1&quot;
-    Retrieve the 1 best clusterings: [...]$clusters
-    Retrieve the 1 CPU times: [...]$timings
-    Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 23.8 seconds. </code></pre>
-<pre class="r"><code>clabels &lt;- BASS@res_postprocess$c_ls # cell type clusters
-zlabels &lt;- BASS@res_postprocess$z_ls # spatial domain labels
-pi_est &lt;- BASS@res_postprocess$pi_ls # cell type composition matrix</code></pre>
+<pre><code>Post-processing...
+done</code></pre>
+<pre class="r"><code>clabels &lt;- BASS@results$c # cell type clusters
+zlabels &lt;- BASS@results$z # spatial domain labels
+pi_est &lt;- BASS@results$pi # cell type composition matrix</code></pre>
 </div>
-<div id="annotate-cell-types" class="section level2">
-<h2>Annotate cell types</h2>
-<pre class="r"><code>library(Seurat)
-library(dplyr)</code></pre>
-<pre class="r"><code>l &lt;- 1 # tissue section number
-# Perform DE analysis with Seurat
-seu_obj &lt;- CreateSeuratObject(counts = cnts[[l]], min.cells = 1)
+<div id="annotate-cell-types" class="section level1">
+<h1>Annotate cell types</h1>
+<pre class="r"><code># Perform DE analysis with Seurat
+cnts_all &lt;- do.call(cbind, cnts)
+seu_obj &lt;- CreateSeuratObject(counts = cnts_all)
 seu_obj &lt;- NormalizeData(seu_obj)
 seu_obj &lt;- ScaleData(seu_obj, features = rownames(seu_obj))</code></pre>
 <pre><code>Centering and scaling data matrix</code></pre>
 <pre class="r"><code>seu_obj &lt;- RunPCA(seu_obj, features = rownames(seu_obj), verbose = F)
-Idents(seu_obj) &lt;- factor(clabels[[l]])
+Idents(seu_obj) &lt;- factor(unlist(clabels))
 markers &lt;- FindAllMarkers(seu_obj, only.pos = T, 
   min.pct = 0, logfc.threshold = 0, verbose = F)
 top5 &lt;- markers %&gt;%
   group_by(cluster) %&gt;%
   top_n(n = 5, wt = avg_logFC)
-subset(top5, cluster == 7) # Markers of eL2/3 cells</code></pre>
-<pre><code># A tibble: 5 × 7
-# Groups:   cluster [1]
-     p_val avg_logFC pct.1 pct.2 p_val_adj cluster gene 
-     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;
-1 3.13e-62      2.41 0.892 0.181  5.20e-60 7       Cux2 
-2 3.42e-29      1.41 0.753 0.254  5.68e-27 7       Nos1 
-3 5.14e-29      1.63 0.634 0.167  8.53e-27 7       Synpr
-4 2.70e-21      1.15 0.914 0.546  4.48e-19 7       Nov  
-5 1.57e-19      1.15 0.892 0.611  2.61e-17 7       Otof </code></pre>
-<pre class="r"><code># By checking the top DE genes of each cell type cluster, 
+
+# By checking the top DE genes of each cell type cluster, 
 # we annotate specific cell types for each cluster
-cTypes &lt;- c(&quot;eL5d&quot;, &quot;eL6&quot;, &quot;OPC&quot;, &quot;eL5c&quot;, &quot;eL5a&quot;, 
-  &quot;Astro&quot;, &quot;eL2/3&quot;, &quot;Reln&quot;, &quot;SST-Lhx6&quot;, &quot;eL5b&quot;, 
-  &quot;Smc&quot;, &quot;Micro&quot;, &quot;Smc-Astro&quot;, &quot;Oligo&quot;, &quot;VIP&quot;)
-clabels_l &lt;- factor(clabels[[l]])
-levels(clabels_l) &lt;- cTypes</code></pre>
-</div>
-<div id="visualization" class="section level2">
-<h2>Visualization</h2>
-<p>You can refer to <a href="https://github.com/zhengli09/BASS-Analysis/tree/master/code/viz.R">visualization</a> for some useful plotting functions or you can write your own code for plotting.</p>
-<pre class="r"><code>library(ggplot2)
-source(&quot;code/viz.R&quot;)
-# Spatial domains
-zlabels_l &lt;- factor(zlabels[[l]])
-levels(zlabels_l) &lt;- c(&quot;L2/3&quot;, &quot;L1&quot;, &quot;L6&quot;, &quot;L5&quot;)
-zlabels_l &lt;- factor(zlabels_l, c(&quot;L1&quot;, &quot;L2/3&quot;, &quot;L5&quot;, &quot;L6&quot;))
-plotClusters(xy[[l]], labels = zlabels_l, title = &quot;Spatial domains&quot;) +
-  theme(legend.position = &quot;bottom&quot;)</code></pre>
-<p><img src="figure/STARmap.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+cTypes &lt;- c(
+  &quot;eL5d&quot;, &quot;Astro&quot;, &quot;Micro&quot;, &quot;Lhx6&quot;, &quot;eL6a&quot;,
+  &quot;eL2/3&quot;, &quot;eL5c&quot;, &quot;Smc&quot;, &quot;eL6b&quot;, &quot;eL5b&quot;,
+  &quot;eL5a&quot;, &quot;Oligo&quot;, &quot;SST&quot;, &quot;Reln&quot;, &quot;VIP&quot;)
+clabels &lt;- lapply(clabels, function(clabels.l){
+  clabels.l &lt;- factor(clabels.l)
+  levels(clabels.l) &lt;- cTypes
+  clabels.l &lt;- factor(clabels.l, levels = c(
+    &quot;eL2/3&quot;, &quot;eL5a&quot;, &quot;eL5b&quot;, &quot;eL5c&quot;, &quot;eL5d&quot;, 
+    &quot;eL6a&quot;, &quot;eL6b&quot;, &quot;Reln&quot;, &quot;VIP&quot;, &quot;SST&quot;,&quot;Lhx6&quot;,
+    &quot;Oligo&quot;, &quot;Smc&quot;, &quot;Astro&quot;, &quot;Micro&quot;
+  ))
+})</code></pre>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
-Past versions of unnamed-chunk-7-1.png
-</button>
+<a class="btn btn-primary" data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample1">
+Top DE genes for each cell type cluster </a>
 </p>
-<div id="fig-unnamed-chunk-7-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/figure/STARmap.Rmd/unnamed-chunk-7-1.png" target="_blank">9a68511</a>
-</td>
-<td>
-zhengli09
-</td>
-<td>
-2022-02-27
-</td>
-</tr>
-</tbody>
-</table>
+<div id="collapseExample1" class="collapse">
+<div class="card card-body">
+<pre class="r"><code>data.frame(top5)</code></pre>
+<pre><code>           p_val avg_logFC pct.1 pct.2     p_val_adj cluster    gene
+1  2.876233e-124 2.3092911 0.761 0.114 4.774546e-122       1    Egr2
+2   3.139869e-73 1.6184124 0.957 0.389  5.212183e-71       1    Egr4
+3   1.971104e-70 1.8823791 0.920 0.341  3.272033e-68       1     Fos
+4   4.449469e-44 1.7215121 0.442 0.094  7.386119e-42       1   Npas4
+5   6.150811e-38 1.4558075 0.650 0.231  1.021035e-35       1    Bdnf
+6  1.378796e-114 2.5568852 0.694 0.195 2.288802e-112       2    Aqp4
+7   7.890228e-52 1.4258715 0.825 0.646  1.309778e-49       2 Pcdhgc3
+8   4.200450e-18 1.7168932 0.290 0.129  6.972747e-16       2    Rorb
+9   1.772491e-09 1.3918680 0.449 0.371  2.942335e-07       2    Igtp
+10  1.386255e-07 1.5058103 0.217 0.124  2.301184e-05       2 Hsd11b1
+11  1.023927e-65 2.4703129 0.722 0.184  1.699718e-63       3    Flt1
+12  1.252955e-49 3.1147874 0.391 0.061  2.079906e-47       3    Lmo2
+13  3.286927e-31 2.1828307 0.429 0.111  5.456298e-29       3   Rgs10
+14  4.714697e-29 2.5231186 0.338 0.076  7.826398e-27       3   Itgam
+15  8.636498e-21 2.2719544 0.353 0.109  1.433659e-18       3    Car4
+16 4.790353e-151 2.2967005 0.975 0.186 7.951986e-149       4    Gad2
+17 4.834962e-130 2.7611096 0.981 0.261 8.026037e-128       4    Gad1
+18  7.633709e-78 2.3072336 0.540 0.087  1.267196e-75       4    Lhx6
+19  5.183467e-63 1.8881946 0.925 0.475  8.604555e-61       4    Rbp4
+20  1.780421e-19 1.7123612 0.242 0.060  2.955499e-17       4   Pvalb
+21 3.279767e-258 2.2253915 0.747 0.123 5.444414e-256       5    Syt6
+22 1.232734e-250 1.6530803 0.983 0.486 2.046339e-248       5    Pcp4
+23 6.434915e-206 1.6893945 0.878 0.288 1.068196e-203       5     Sla
+24 1.525016e-127 1.2304348 0.592 0.146 2.531526e-125       5   Foxp2
+25  2.476512e-43 1.3486708 0.171 0.029  4.111010e-41       5    Rprm
+26 5.497035e-167 2.3000464 0.832 0.174 9.125078e-165       6    Cux2
+27  1.840535e-80 1.3935963 0.771 0.275  3.055289e-78       6   Cpne5
+28  5.933843e-78 1.4504471 0.586 0.152  9.850179e-76       6   Synpr
+29  1.782050e-74 1.5709955 0.697 0.243  2.958203e-72       6    Nos1
+30  3.374784e-59 1.1418423 0.872 0.524  5.602142e-57       6     Nov
+31 1.159966e-111 1.3464488 0.487 0.086 1.925543e-109       7    Tpbg
+32  2.515657e-91 1.0283563 0.755 0.283  4.175991e-89       7 Fam19a1
+33  3.465477e-87 1.2598938 0.641 0.216  5.752691e-85       7 Tcerg1l
+34  5.266243e-65 1.0158491 0.626 0.246  8.741963e-63       7 Adcyap1
+35  2.928878e-33 1.1546268 0.470 0.216  4.861937e-31       7    Bdnf
+36 1.605416e-155 4.8446465 0.803 0.108 2.664991e-153       8     Mgp
+37 8.794806e-135 3.4458575 0.921 0.200 1.459938e-132       8     Bgn
+38 3.943231e-127 3.6464290 0.605 0.064 6.545764e-125       8    Mylk
+39  7.378080e-61 2.0564594 0.678 0.183  1.224761e-58       8    Flt1
+40  3.404510e-12 2.2026007 0.243 0.089  5.651486e-10       8    Spp1
+41  2.258126e-87 2.7455940 0.948 0.324  3.748489e-85       9    Ctgf
+42  1.486451e-47 1.2324767 0.978 0.570  2.467508e-45       9    Pcp4
+43  1.249261e-27 1.4360043 0.739 0.357  2.073774e-25       9   Cplx3
+44  2.177792e-26 1.1879363 0.627 0.238  3.615135e-24       9   Nr4a2
+45  1.253685e-24 1.9400625 0.194 0.028  2.081118e-22       9   Obox3
+46  2.271656e-70 2.0298432 0.958 0.451  3.770948e-68      10    Etv1
+47  8.568442e-68 2.0243252 0.909 0.336  1.422361e-65      10    Myl4
+48  1.695122e-34 1.6233222 0.587 0.197  2.813903e-32      10  Plcxd2
+49  2.621470e-20 1.4652994 0.399 0.132  4.351641e-18      10    Tpbg
+50  2.127069e-04 1.0230826 0.105 0.041  3.530935e-02      10  Kcnip2
+51  2.043359e-91 1.8364825 0.599 0.133  3.391976e-89      11  Sema3e
+52  3.206573e-43 1.2351782 0.533 0.190  5.322912e-41      11  Sema3c
+53  9.927517e-39 1.5260025 0.358 0.097  1.647968e-36      11     Npy
+54  5.188958e-32 0.9891631 0.697 0.371  8.613670e-30      11   Rspo2
+55  1.837275e-14 1.1637204 0.161 0.048  3.049877e-12      11   Tacr1
+56  2.119861e-92 2.9567126 0.942 0.273  3.518970e-90      12   Enpp2
+57  1.827481e-86 3.1145344 0.777 0.163  3.033618e-84      12     Mog
+58  1.616774e-06 0.9739285 0.612 0.514  2.683845e-04      12   Sulf2
+59  6.307308e-05 1.1828195 0.124 0.046  1.047013e-02      12  Pdgfra
+60  1.016140e-03 1.4340611 0.149 0.074  1.686793e-01      12   Pde1c
+61  4.873556e-57 3.3759654 0.844 0.285  8.090102e-55      13     Sst
+62  1.924884e-11 1.0333617 0.458 0.184  3.195307e-09      13   Synpr
+63  1.776572e-04 0.8851463 0.083 0.023  2.949109e-02      13   Qrfpr
+64  2.464206e-03 2.4064675 0.271 0.166  4.090583e-01      13   Calb2
+65  3.300751e-03 0.4482856 0.083 0.218  5.479247e-01      13   Nptx2
+66 1.710980e-150 4.3247819 0.815 0.039 2.840226e-148      14    Pnoc
+67  1.866259e-58 3.2149939 0.981 0.212  3.097989e-56      14    Gad2
+68  3.593521e-50 2.8830781 1.000 0.285  5.965245e-48      14    Gad1
+69  2.549962e-40 3.3930013 0.648 0.107  4.232936e-38      14    Reln
+70  1.061489e-21 2.4232361 0.333 0.047  1.762072e-19      14    Ndnf
+71  1.941501e-58 5.2381718 0.838 0.097  3.222891e-56      15     Vip
+72  7.585684e-33 2.3914599 0.811 0.161  1.259223e-30      15   Calb2
+73  5.231229e-23 1.5710322 0.811 0.185  8.683840e-21      15   Synpr
+74  9.134001e-16 1.8958560 0.757 0.259  1.516244e-13      15    Penk
+75  9.049567e-14 2.3228765 0.514 0.129  1.502228e-11      15   Htr3a</code></pre>
 </div>
 </div>
-<pre class="r"><code># Cell types
-library(gghighlight)
-clabels_l &lt;- factor(clabels_l, levels = c(
-  &quot;eL2/3&quot;, &quot;eL5a&quot;, &quot;eL5b&quot;, &quot;eL5c&quot;, &quot;eL5d&quot;, &quot;eL6&quot;,
-  &quot;Reln&quot;, &quot;VIP&quot;, &quot;SST-Lhx6&quot;,
-  &quot;Oligo&quot;, &quot;Smc&quot;, &quot;Astro&quot;, &quot;Smc-Astro&quot;, &quot;Micro&quot;, &quot;OPC&quot;)
-  )
-plotCellTypes(xy, clabels_l, ncol = 5) + 
-  ggtitle(&quot;Spatial distribution of cell types&quot;) +
-  theme(plot.title = element_text(hjust = 0.5))</code></pre>
-<p><img src="figure/STARmap.Rmd/unnamed-chunk-8-1.png" width="816" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
-Past versions of unnamed-chunk-8-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-8-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/figure/STARmap.Rmd/unnamed-chunk-8-1.png" target="_blank">9a68511</a>
-</td>
-<td>
-zhengli09
-</td>
-<td>
-2022-02-27
-</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-<pre class="r"><code># Cell type compositions in each spatial domain
-pi_est &lt;- BASS@res_postprocess$pi_ls
-pi_est &lt;- pi_est[match(levels(clabels_l), cTypes), c(2, 1, 4, 3)]
-rownames(pi_est) &lt;- levels(clabels_l)
-colnames(pi_est) &lt;- levels(zlabels_l)
-plotCellTypeComp(pi_est)</code></pre>
-<p><img src="figure/STARmap.Rmd/unnamed-chunk-9-1.png" width="288" style="display: block; margin: auto;" /></p>
+<div id="visualization" class="section level1">
+<h1>Visualization</h1>
+<p>You can refer to <a
+href="https://github.com/zhengli09/BASS-Analysis/tree/master/code/viz.R">visualization</a>
+for some useful plotting functions or you can write your own code for
+plotting.</p>
+<pre class="r"><code>source(&quot;code/viz.R&quot;)</code></pre>
+<div id="spatial-domains" class="section level2">
+<h2>Spatial domains</h2>
+<pre class="r"><code>zlabels &lt;- lapply(zlabels, function(zlabels.l){
+  zlabels.l &lt;- factor(zlabels.l)
+  levels(zlabels.l) &lt;- c(&quot;L6&quot;, &quot;L5&quot;, &quot;L2/3&quot;, &quot;L1&quot;)
+  zlabels.l &lt;- factor(zlabels.l, levels = c(&quot;L1&quot;, &quot;L2/3&quot;, &quot;L5&quot;, &quot;L6&quot;))
+})
+cols &lt;-  c(&quot;#e07a5f&quot;, &quot;#3d405b&quot;, &quot;#81b29a&quot;, &quot;#f2cc8f&quot;)
+plotClustersFacet(xys, zlabels, c(&quot;BZ5&quot;, &quot;BZ9&quot;, &quot;BZ14&quot;), size = 0.7) +
+  scale_color_manual(&quot;Domain&quot;, values = cols)</code></pre>
+<p><img src="figure/STARmap.Rmd/unnamed-chunk-9-1.png" width="720" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
 Past versions of unnamed-chunk-9-1.png
@@ -946,7 +1038,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/figure/STARmap.Rmd/unnamed-chunk-9-1.png" target="_blank">9a68511</a>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/figure/STARmap.Rmd/unnamed-chunk-9-1.png" target="_blank">9a68511</a>
 </td>
 <td>
 zhengli09
@@ -960,335 +1052,48 @@ zhengli09
 </div>
 </div>
 </div>
+<div id="cell-types" class="section level2">
+<h2>Cell types</h2>
+<pre class="r"><code>cols &lt;- c(&quot;#98c1d9&quot;,&quot;#2a9d8f&quot;,&quot;#e9c46a&quot;,&quot;#f4a261&quot;,&quot;#e76f51&quot;,
+  &quot;#234888&quot;, &quot;#a8dadc&quot;,&quot;#b388eb&quot;,&quot;#bb3e03&quot;,&quot;#52b69a&quot;,
+  &quot;#e9d8a6&quot;, &quot;#f19c79&quot;, &quot;#DBC9D8&quot;, &quot;#A4277C&quot;, &quot;#D79739&quot;)
+plotClustersFacet(xys, clabels, c(&quot;BZ5&quot;, &quot;BZ9&quot;, &quot;BZ14&quot;), size = 0.5) +
+  scale_color_manual(&quot;Type&quot;, values = cols) +
+  guides(color = guide_legend(byrow = T, nrow = 2,
+    override.aes = list(size = 2)))</code></pre>
+<p><img src="figure/STARmap.Rmd/unnamed-chunk-10-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
-<div id="multi-sample-analysis" class="section level1">
-<h1>Multi-sample analysis</h1>
-<div id="load-data-and-set-hyper-parameters-1" class="section level2">
-<h2>Load data and set hyper-parameters</h2>
-<pre class="r"><code># We use all the three tissue sections: BZ5, BZ9, and BZ14 in 
-# the multi-sample analysis
-xy &lt;- lapply(starmap_info, function(info.i){
-  as.matrix(info.i[, c(&quot;x&quot;, &quot;y&quot;)]) # spatial coordinates
-})
-cnts &lt;- starmap_cnts # count matrices for three tissue sections
-# hyper-parameters
-C &lt;- 15 # number of cell types
-R &lt;- 4 # number of spatial domains</code></pre>
+<div id="spatial-distribution-of-cell-types-on-the-tissue-section-bz5"
+class="section level2">
+<h2>Spatial distribution of cell types on the tissue section BZ5</h2>
+<pre class="r"><code>library(gghighlight)
+plotCellTypes(xys[[1]], clabels[[1]], cols, ncol = 5, dotsize = 0.7,
+  size = 0.5, alpha = 0.5)</code></pre>
+<p><img src="figure/STARmap.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-<div id="run-bass-1" class="section level2">
-<h2>Run BASS</h2>
-<pre class="r"><code>set.seed(0)
-# Set up BASS object
-BASS &lt;- createBASSObject(cnts, xy, C = C, R = R, 
-  beta_est_approach = &quot;ACCUR_EST&quot;, 
-  burn_in = 10000, samples = 10000)</code></pre>
-<pre><code>***************************************
-  Bayesian Analytics for Spatial Segmentation (BASS)
-  Authors: Zheng Li, Xiang Zhou
-  Affiliate: Department of Biostatistics, University of Michigan
-  INPUT INFO:
-    - Number of samples: 3 
-    - Number of spots/cells: 1049 1053 1088 
-    - Number of genes: 166 
-    - Potts interaction parameter estimation approach: ACCUR_EST 
-    - Variance-covariance structure of gene expression features: EEE 
-  To list all hyper-parameters, Type listAllHyper(BASS_object)
-***************************************</code></pre>
-<pre class="r"><code># Data pre-processing:
-# In addition to the log-normalization and dimension reduction with
-# PCA, we also conduct a batch effect adjustment using the Harmony
-# package.
-BASS &lt;- BASS.preprocess(BASS, doLogNormalize = TRUE, 
-  doPCA = TRUE, scaleFeature = TRUE, nPC = 20)</code></pre>
-<pre><code>***** Log-normalize gene expression data *****
-***** Exclude genes with 0 expression *****
-***** Reduce data dimension with PCA *****
-***** Correct batch effect with Harmony *****</code></pre>
-<pre class="r"><code># Run BASS algorithm
-BASS &lt;- BASS.run(BASS)</code></pre>
-<pre class="r"><code># post-process posterior samples:
-BASS &lt;- BASS.postprocess(BASS)</code></pre>
-<pre><code>
-    ......................................................................................
-    . Method                         Time (sec)           Status                         . 
-    ......................................................................................
-    . ECR-ITERATIVE-1                122.607              Converged (3 iterations)       . 
-    ......................................................................................
-
-    Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
-    Retrieve the 1 permutation arrays by typing:
-        [...]$permutations$&quot;ECR-ITERATIVE-1&quot;
-    Retrieve the 1 best clusterings: [...]$clusters
-    Retrieve the 1 CPU times: [...]$timings
-    Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 131 seconds. 
-
-    ......................................................................................
-    . Method                         Time (sec)           Status                         . 
-    ......................................................................................
-    . ECR-ITERATIVE-1                53.304               Converged (2 iterations)       . 
-    ......................................................................................
-
-    Relabelling all methods according to method ECR-ITERATIVE-1 ... done!
-    Retrieve the 1 permutation arrays by typing:
-        [...]$permutations$&quot;ECR-ITERATIVE-1&quot;
-    Retrieve the 1 best clusterings: [...]$clusters
-    Retrieve the 1 CPU times: [...]$timings
-    Retrieve the 1 X 1 similarity matrix: [...]$similarity
-    Label switching finished. Total time: 59.1 seconds. </code></pre>
-<pre class="r"><code>clabels &lt;- BASS@res_postprocess$c_ls # cell type clusters
-zlabels &lt;- BASS@res_postprocess$z_ls # spatial domain labels
-pi_est &lt;- BASS@res_postprocess$pi_ls # cell type composition matrix</code></pre>
-</div>
-<div id="annotate-cell-types-1" class="section level2">
-<h2>Annotate cell types</h2>
-<pre class="r"><code># Perform DE analysis with Seurat
-cnts_all &lt;- do.call(cbind, cnts)
-seu_obj &lt;- CreateSeuratObject(counts = cnts_all, min.cells = 1)
-seu_obj &lt;- NormalizeData(seu_obj)
-seu_obj &lt;- ScaleData(seu_obj, features = rownames(seu_obj))</code></pre>
-<pre><code>Centering and scaling data matrix</code></pre>
-<pre class="r"><code>seu_obj &lt;- RunPCA(seu_obj, features = rownames(seu_obj), verbose = F)
-Idents(seu_obj) &lt;- factor(unlist(clabels))
-markers &lt;- FindAllMarkers(seu_obj, only.pos = T, 
-  min.pct = 0, logfc.threshold = 0, verbose = F)
-top5 &lt;- markers %&gt;%
-  group_by(cluster) %&gt;%
-  top_n(n = 5, wt = avg_logFC)
-subset(top5, cluster == 7) # Markers of eL6a cells</code></pre>
-<pre><code># A tibble: 5 × 7
-# Groups:   cluster [1]
-      p_val avg_logFC pct.1 pct.2 p_val_adj cluster gene 
-      &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;
-1 4.90e-259      2.23 0.746 0.122 8.13e-257 7       Syt6 
-2 6.11e-252      1.65 0.983 0.485 1.01e-249 7       Pcp4 
-3 2.63e-207      1.70 0.878 0.287 4.37e-205 7       Sla  
-4 8.65e-127      1.23 0.589 0.146 1.44e-124 7       Foxp2
-5 6.80e- 44      1.35 0.171 0.028 1.13e- 41 7       Rprm </code></pre>
-<pre class="r"><code>subset(top5, cluster == 3) # Markers of eL6b cells</code></pre>
-<pre><code># A tibble: 5 × 7
-# Groups:   cluster [1]
-     p_val avg_logFC pct.1 pct.2 p_val_adj cluster gene 
-     &lt;dbl&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;
-1 4.31e-86      2.74 0.947 0.324  7.15e-84 3       Ctgf 
-2 2.85e-46      1.23 0.977 0.57   4.73e-44 3       Pcp4 
-3 3.14e-27      1.43 0.737 0.357  5.21e-25 3       Cplx3
-4 4.64e-27      1.21 0.632 0.238  7.70e-25 3       Nr4a2
-5 8.89e-23      1.93 0.188 0.028  1.48e-20 3       Obox3</code></pre>
-<pre class="r"><code># By checking the top DE genes of each cell type cluster, we annotate 
-# specific cell types for each cluster
-cTypes &lt;- c(
-  &quot;Lhx6&quot;, &quot;Micro&quot;, &quot;eL6b&quot;, &quot;eL5d&quot;, &quot;eL2/3&quot;, 
-  &quot;Oligo&quot;, &quot;eL6a&quot;, &quot;eL5c&quot;, &quot;Smc&quot;, &quot;eL5a&quot;, 
-  &quot;eL5b&quot;, &quot;Astro&quot;, &quot;SST&quot;, &quot;VIP&quot;, &quot;Reln&quot;)
-clabels &lt;- lapply(clabels, function(clabels.l){
-  clabels.l &lt;- factor(clabels.l)
-  levels(clabels.l) &lt;- cTypes
-  clabels.l &lt;- factor(clabels.l, levels = c(
-    &quot;eL2/3&quot;, &quot;eL5a&quot;, &quot;eL5b&quot;, &quot;eL5c&quot;, &quot;eL5d&quot;, 
-    &quot;eL6a&quot;, &quot;eL6b&quot;, &quot;Reln&quot;, &quot;VIP&quot;, &quot;SST&quot;,&quot;Lhx6&quot;,
-    &quot;Oligo&quot;, &quot;Smc&quot;, &quot;Astro&quot;, &quot;Micro&quot;
-  ))
-})</code></pre>
-</div>
-<div id="visualization-1" class="section level2">
-<h2>Visualization</h2>
-<pre class="r"><code># Spatial domains
-library(cowplot)
-zlabels &lt;- lapply(zlabels, function(zlabels.l){
-  zlabels.l &lt;- factor(zlabels.l)
-  levels(zlabels.l) &lt;- c(&quot;L6&quot;, &quot;L5&quot;, &quot;L2/3&quot;, &quot;L1&quot;)
-  zlabels.l &lt;- factor(zlabels.l, levels = c(&quot;L1&quot;, &quot;L2/3&quot;, &quot;L5&quot;, &quot;L6&quot;))
-})
-plist &lt;- lapply(1:length(zlabels), function(i){
-  title.i &lt;- c(&quot;BZ5&quot;, &quot;BZ9&quot;, &quot;BZ14&quot;)[i]
-  plotClusters(xy[[i]], labels = zlabels[[i]], title = title.i)
-})
-plot_grid(plotlist = plist, ncol = 3)</code></pre>
-<p><img src="figure/STARmap.Rmd/unnamed-chunk-14-1.png" width="864" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
-Past versions of unnamed-chunk-14-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-14-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/figure/STARmap.Rmd/unnamed-chunk-14-1.png" target="_blank">9a68511</a>
-</td>
-<td>
-zhengli09
-</td>
-<td>
-2022-02-27
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code># Cell types
-library(RColorBrewer)
-getPalette &lt;- colorRampPalette(brewer.pal(8, &quot;Dark2&quot;))
-plist &lt;- lapply(1:length(clabels), function(i){
-  title.i &lt;- c(&quot;BZ5&quot;, &quot;BZ9&quot;, &quot;BZ14&quot;)[i]
-  plotClusters(xy[[i]], labels = clabels[[i]], title.i) +
-  scale_colour_manual(&quot;Cell types&quot;, values = getPalette(15))
-})
-legend &lt;- get_legend(plist[[1]] + theme(legend.position = &quot;bottom&quot;))
-plist &lt;- append(plist, list(legend) , 3)
-plot_grid(plotlist = plist, ncol = 2)</code></pre>
-<p><img src="figure/STARmap.Rmd/unnamed-chunk-15-1.png" width="816" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
-Past versions of unnamed-chunk-15-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-15-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/figure/STARmap.Rmd/unnamed-chunk-15-1.png" target="_blank">9a68511</a>
-</td>
-<td>
-zhengli09
-</td>
-<td>
-2022-02-27
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code># Spatial distribution of cell types on tissue section BZ5
-l &lt;- 1
-plotCellTypes(xy[[l]], clabels[[l]], ncol = 5) +
-  scale_colour_manual(&quot;Cell types&quot;, values = getPalette(15))</code></pre>
-<p><img src="figure/STARmap.Rmd/unnamed-chunk-16-1.png" width="816" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-1">
-Past versions of unnamed-chunk-16-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-16-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/figure/STARmap.Rmd/unnamed-chunk-16-1.png" target="_blank">9a68511</a>
-</td>
-<td>
-zhengli09
-</td>
-<td>
-2022-02-27
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code># Cell type compositions in each spatial domain
-pi_est &lt;- BASS@res_postprocess$pi_ls
-pi_est &lt;- pi_est[match(levels(clabels[[l]]), cTypes), c(4, 3, 2, 1)]
-rownames(pi_est) &lt;- levels(clabels[[l]])
-colnames(pi_est) &lt;- levels(zlabels[[l]])
-plotCellTypeComp(pi_est)</code></pre>
-<p><img src="figure/STARmap.Rmd/unnamed-chunk-17-1.png" width="288" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
-Past versions of unnamed-chunk-17-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-17-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/zhengli09/BASS-analysis/blob/9a685114f1f29bb007c27088adaf8ce2582c56a2/docs/figure/STARmap.Rmd/unnamed-chunk-17-1.png" target="_blank">9a68511</a>
-</td>
-<td>
-zhengli09
-</td>
-<td>
-2022-02-27
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<div id="cell-type-compositions-in-each-spatial-domain"
+class="section level2">
+<h2>Cell type compositions in each spatial domain</h2>
+<pre class="r"><code># adjust order of labeling
+pi_est &lt;- pi_est[match(
+  levels(clabels[[1]]), cTypes),
+  c(4,3,2,1)]
+colnames(pi_est) &lt;- c(&quot;L1&quot;, &quot;L2/3&quot;, &quot;L5&quot;, &quot;L6&quot;)
+rownames(pi_est) &lt;- levels(clabels[[1]])
+plotCellTypeCompBar(pi_est, cols, nrow = 2)</code></pre>
+<p><img src="figure/STARmap.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.1.2 (2021-11-01)
+<pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.6 LTS
+Running under: Ubuntu 18.04.5 LTS
 
 Matrix products: default
 BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
@@ -1306,86 +1111,93 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] RColorBrewer_1.1-2 cowplot_1.1.1      gghighlight_0.3.2  ggplot2_3.3.5     
- [5] dplyr_1.0.8        Seurat_3.2.3       BASS_1.0           mclust_5.4.9      
- [9] GIGrvg_0.5         workflowr_1.7.0   
+ [1] gghighlight_0.3.2 forcats_0.5.0     stringr_1.4.0     dplyr_1.0.8      
+ [5] purrr_0.3.4       readr_1.3.1       tidyr_1.1.1       tibble_3.1.6     
+ [9] ggplot2_3.3.5     tidyverse_1.3.0   Seurat_3.2.3      BASS_1.1.0       
+[13] GIGrvg_0.5        workflowr_1.7.0  
 
 loaded via a namespace (and not attached):
-  [1] plyr_1.8.6                  igraph_1.2.7               
-  [3] lazyeval_0.2.2              splines_4.1.2              
-  [5] BiocParallel_1.22.0         listenv_0.8.0              
-  [7] scattermore_0.7             GenomeInfoDb_1.24.2        
-  [9] scater_1.16.2               digest_0.6.29              
- [11] htmltools_0.5.2             viridis_0.5.1              
- [13] fansi_1.0.2                 magrittr_2.0.2             
- [15] tensor_1.5                  cluster_2.1.2              
- [17] ROCR_1.0-11                 limma_3.48.3               
- [19] globals_0.14.0              matrixStats_0.61.0         
- [21] lpSolve_5.6.15              colorspace_2.0-3           
- [23] blob_1.2.1                  ggrepel_0.9.1              
- [25] xfun_0.29                   callr_3.7.0                
- [27] crayon_1.5.0                RCurl_1.98-1.5             
- [29] jsonlite_1.8.0              spatstat.data_2.1-0        
- [31] spatstat_1.64-1             survival_3.2-13            
- [33] zoo_1.8-9                   glue_1.6.2                 
- [35] polyclip_1.10-0             gtable_0.3.0               
- [37] zlibbioc_1.34.0             XVector_0.32.0             
- [39] leiden_0.3.9                DelayedArray_0.18.0        
- [41] BiocSingular_1.4.0          future.apply_1.8.1         
- [43] SingleCellExperiment_1.14.1 BiocGenerics_0.38.0        
- [45] abind_1.4-5                 scales_1.1.1               
- [47] DBI_1.1.1                   miniUI_0.1.1.1             
- [49] Rcpp_1.0.8                  viridisLite_0.4.0          
- [51] xtable_1.8-4                reticulate_1.22            
- [53] rsvd_1.0.3                  stats4_4.1.2               
- [55] htmlwidgets_1.5.1           httr_1.4.2                 
- [57] ellipsis_0.3.2              ica_1.0-2                  
- [59] farver_2.1.0                pkgconfig_2.0.3            
- [61] uwot_0.1.10                 deldir_1.0-6               
- [63] sass_0.4.0                  utf8_1.2.2                 
- [65] labeling_0.4.2              tidyselect_1.1.2           
- [67] rlang_1.0.1                 reshape2_1.4.4             
- [69] later_1.1.0.1               munsell_0.5.0              
- [71] tools_4.1.2                 cli_3.2.0                  
- [73] generics_0.1.2              ggridges_0.5.3             
- [75] evaluate_0.15               stringr_1.4.0              
- [77] fastmap_1.1.0               goftest_1.2-3              
- [79] yaml_2.3.5                  processx_3.5.2             
- [81] knitr_1.37                  fs_1.5.2                   
- [83] fitdistrplus_1.1-6          purrr_0.3.4                
- [85] RANN_2.6.1                  nlme_3.1-153               
- [87] pbapply_1.5-0               future_1.22.1              
- [89] sparseMatrixStats_1.4.2     whisker_0.4                
- [91] mime_0.12                   compiler_4.1.2             
- [93] rstudioapi_0.13             beeswarm_0.4.0             
- [95] plotly_4.9.2.1              png_0.1-7                  
- [97] spatstat.utils_2.2-0        tibble_3.1.6               
- [99] bslib_0.3.1                 stringi_1.7.6              
-[101] highr_0.9                   ps_1.6.0                   
-[103] lattice_0.20-45             Matrix_1.3-4               
-[105] vctrs_0.3.8                 pillar_1.7.0               
-[107] lifecycle_1.0.1             combinat_0.0-8             
-[109] lmtest_0.9-38               jquerylib_0.1.4            
-[111] RcppAnnoy_0.0.19            BiocNeighbors_1.6.0        
-[113] data.table_1.14.2           bitops_1.0-7               
-[115] irlba_2.3.3                 httpuv_1.5.4               
-[117] patchwork_1.1.1             GenomicRanges_1.44.0       
-[119] R6_2.5.1                    promises_1.1.1             
-[121] KernSmooth_2.23-20          gridExtra_2.3              
-[123] vipor_0.4.5                 IRanges_2.26.0             
-[125] parallelly_1.28.1           codetools_0.2-18           
-[127] MASS_7.3-54                 assertthat_0.2.1           
-[129] SummarizedExperiment_1.22.0 rprojroot_2.0.2            
-[131] withr_2.4.3                 label.switching_1.8        
-[133] sctransform_0.3.2           harmony_0.1.0              
-[135] S4Vectors_0.30.2            GenomeInfoDbData_1.2.6     
-[137] mgcv_1.8-38                 parallel_4.1.2             
-[139] rpart_4.1-15                grid_4.1.2                 
-[141] tidyr_1.1.1                 rmarkdown_2.12.1           
-[143] DelayedMatrixStats_1.14.3   MatrixGenerics_1.4.3       
-[145] Rtsne_0.15                  git2r_0.28.0               
-[147] getPass_0.2-2               Biobase_2.48.0             
-[149] shiny_1.5.0                 ggbeeswarm_0.6.0           </code></pre>
+  [1] utf8_1.2.2                  reticulate_1.25            
+  [3] tidyselect_1.1.2            htmlwidgets_1.5.1          
+  [5] combinat_0.0-8              grid_4.2.0                 
+  [7] BiocParallel_1.22.0         lpSolve_5.6.15             
+  [9] Rtsne_0.16                  munsell_0.5.0              
+ [11] codetools_0.2-18            ica_1.0-2                  
+ [13] future_1.25.0               miniUI_0.1.1.1             
+ [15] withr_2.4.3                 colorspace_2.0-3           
+ [17] Biobase_2.48.0              highr_0.9                  
+ [19] knitr_1.37                  rstudioapi_0.13            
+ [21] stats4_4.2.0                SingleCellExperiment_1.14.1
+ [23] ROCR_1.0-11                 tensor_1.5                 
+ [25] listenv_0.8.0               labeling_0.4.2             
+ [27] MatrixGenerics_1.4.3        git2r_0.28.0               
+ [29] GenomeInfoDbData_1.2.6      harmony_0.1.0              
+ [31] polyclip_1.10-0             farver_2.1.0               
+ [33] rprojroot_2.0.2             parallelly_1.31.1          
+ [35] vctrs_0.3.8                 generics_0.1.2             
+ [37] xfun_0.29                   R6_2.5.1                   
+ [39] GenomeInfoDb_1.24.2         ggbeeswarm_0.6.0           
+ [41] rsvd_1.0.3                  bitops_1.0-7               
+ [43] spatstat.utils_2.3-1        DelayedArray_0.18.0        
+ [45] assertthat_0.2.1            promises_1.1.1             
+ [47] scales_1.1.1                beeswarm_0.4.0             
+ [49] gtable_0.3.0                globals_0.15.0             
+ [51] processx_3.5.2              goftest_1.2-3              
+ [53] rlang_1.0.1                 splines_4.2.0              
+ [55] lazyeval_0.2.2              broom_0.7.10               
+ [57] yaml_2.3.5                  reshape2_1.4.4             
+ [59] abind_1.4-5                 modelr_0.1.8               
+ [61] backports_1.2.1             httpuv_1.5.4               
+ [63] tools_4.2.0                 ellipsis_0.3.2             
+ [65] jquerylib_0.1.4             RColorBrewer_1.1-2         
+ [67] BiocGenerics_0.38.0         ggridges_0.5.3             
+ [69] Rcpp_1.0.8.3                plyr_1.8.7                 
+ [71] sparseMatrixStats_1.8.0     zlibbioc_1.34.0            
+ [73] RCurl_1.98-1.5              ps_1.6.0                   
+ [75] rpart_4.1.16                deldir_1.0-6               
+ [77] pbapply_1.5-0               viridis_0.5.1              
+ [79] cowplot_1.1.1               S4Vectors_0.30.2           
+ [81] zoo_1.8-10                  SummarizedExperiment_1.22.0
+ [83] haven_2.3.1                 ggrepel_0.9.1              
+ [85] cluster_2.1.3               fs_1.5.2                   
+ [87] magrittr_2.0.2              data.table_1.14.2          
+ [89] scattermore_0.8             lmtest_0.9-40              
+ [91] reprex_0.3.0                RANN_2.6.1                 
+ [93] whisker_0.4                 fitdistrplus_1.1-8         
+ [95] matrixStats_0.61.0          hms_0.5.3                  
+ [97] patchwork_1.1.1             mime_0.12                  
+ [99] evaluate_0.15               xtable_1.8-4               
+[101] mclust_5.4.9                readxl_1.3.1               
+[103] IRanges_2.26.0              gridExtra_2.3              
+[105] compiler_4.2.0              scater_1.16.2              
+[107] KernSmooth_2.23-20          crayon_1.5.0               
+[109] htmltools_0.5.2             mgcv_1.8-40                
+[111] later_1.1.0.1               lubridate_1.7.9            
+[113] DBI_1.1.1                   dbplyr_1.4.4               
+[115] MASS_7.3-57                 Matrix_1.4-1               
+[117] cli_3.2.0                   parallel_4.2.0             
+[119] igraph_1.3.1                GenomicRanges_1.44.0       
+[121] pkgconfig_2.0.3             getPass_0.2-2              
+[123] plotly_4.9.2.1              xml2_1.3.3                 
+[125] vipor_0.4.5                 bslib_0.3.1                
+[127] XVector_0.32.0              rvest_0.3.6                
+[129] callr_3.7.0                 digest_0.6.29              
+[131] sctransform_0.3.3           RcppAnnoy_0.0.19           
+[133] spatstat.data_2.2-0         rmarkdown_2.12.1           
+[135] cellranger_1.1.0            leiden_0.4.2               
+[137] uwot_0.1.11                 DelayedMatrixStats_1.14.3  
+[139] shiny_1.5.0                 lifecycle_1.0.1            
+[141] nlme_3.1-157                jsonlite_1.8.0             
+[143] BiocNeighbors_1.6.0         limma_3.52.0               
+[145] viridisLite_0.4.0           fansi_1.0.2                
+[147] pillar_1.7.0                lattice_0.20-45            
+[149] fastmap_1.1.0               httr_1.4.2                 
+[151] survival_3.3-1              glue_1.6.2                 
+[153] spatstat_1.64-1             label.switching_1.8        
+[155] png_0.1-7                   stringi_1.7.6              
+[157] sass_0.4.1                  blob_1.2.1                 
+[159] BiocSingular_1.4.0          irlba_2.3.3                
+[161] future.apply_1.9.0         </code></pre>
 </div>
 </div>
 </div>

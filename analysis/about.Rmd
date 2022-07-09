@@ -50,12 +50,15 @@ sections (`X`), an L-list of spatial coordinates matrices for L tissue sections
 Check the simulation section of our paper for an evaluation of the influence of 
 the specified number of cell types/spatial domains on the performance of all 
 methods, and the discussion section of our paper for a practical guideline on 
-how to select the two hyper-parameters when the truths are unclear. By default, 
-we infer the spatial interaction parameter $\beta$ based on the data at hand by 
-specifying `beta_method = "SW"`. However, if you have already had a good sense 
-about the value of $\beta$ (usually between 1 and 2), you can fix this parameter 
-to the value specified by `beta` and set `beta_method = "fix"`. Check the 
-documentation of `createBASSObject` for further details.
+how to select the two hyper-parameters when the truths are unclear. In addition, 
+when the purpose of the analysis is solely to detect spatial domains, `C` can be 
+specified to be a relatively large number (e.g. `C = 20`) while exploring `R`. 
+This ensures that the heterogeneity in gene expression can be fully accounted. 
+By default, we infer the spatial interaction parameter $\beta$ based on the data 
+at hand by specifying `beta_method = "SW"`. However, if you have already had a 
+good sense about the value of $\beta$ (usually between 1 and 2), you can fix 
+this parameter to the value specified by `beta` and set `beta_method = "fix"`. 
+Check the documentation of `createBASSObject` for further details.
 
 Notes:  
 The BASS software currently implements a stopping rule to automatically 

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Zheng Li" />
 
-<meta name="date" content="2022-06-12" />
+<meta name="date" content="2022-07-09" />
 
 <title>Software tutorial</title>
 
@@ -385,7 +385,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Software tutorial</h1>
 <h4 class="author">Zheng Li</h4>
-<h4 class="date">2022-06-12</h4>
+<h4 class="date">2022-07-09</h4>
 
 </div>
 
@@ -414,7 +414,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-06-12
+<strong>Last updated:</strong> 2022-07-09
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -545,15 +545,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree829d10c5addeb411ad5deb4dea9f3ff3e8d79d97targetblank829d10ca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree8acc73b279aea2a0a6d384e5ba3629bdd78e6aedtargetblank8acc73ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/zhengli09//BASS-analysis/tree/829d10c5addeb411ad5deb4dea9f3ff3e8d79d97" target="_blank">829d10c</a>
+<a href="https://github.com/zhengli09//BASS-analysis/tree/8acc73b279aea2a0a6d384e5ba3629bdd78e6aed" target="_blank">8acc73b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree829d10c5addeb411ad5deb4dea9f3ff3e8d79d97targetblank829d10ca"
+id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree8acc73b279aea2a0a6d384e5ba3629bdd78e6aedtargetblank8acc73ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -563,7 +563,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/zhengli09//BASS-analysis/tree/829d10c5addeb411ad5deb4dea9f3ff3e8d79d97" target="_blank">829d10c</a>.
+<a href="https://github.com/zhengli09//BASS-analysis/tree/8acc73b279aea2a0a6d384e5ba3629bdd78e6aed" target="_blank">8acc73b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -621,6 +621,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/8acc73b279aea2a0a6d384e5ba3629bdd78e6aed/analysis/about.Rmd" target="_blank">8acc73b</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-07-09
+</td>
+<td>
+Update introduction page
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zhengli09//BASS-analysis/303b57559ce3373f77732fd632a96c4df036f114/docs/about.html" target="_blank">303b575</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-06-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -844,8 +878,12 @@ of cell types (<code>C</code>) and the number of spatial domains
 evaluation of the influence of the specified number of cell
 types/spatial domains on the performance of all methods, and the
 discussion section of our paper for a practical guideline on how to
-select the two hyper-parameters when the truths are unclear. By default,
-we infer the spatial interaction parameter <span
+select the two hyper-parameters when the truths are unclear. In
+addition, when the purpose of the analysis is solely to detect spatial
+domains, <code>C</code> can be specified to be a relatively large number
+(e.g. <code>C = 20</code>) while exploring <code>R</code>. This ensures
+that the heterogeneity in gene expression can be fully accounted. By
+default, we infer the spatial interaction parameter <span
 class="math inline">\(\beta\)</span> based on the data at hand by
 specifying <code>beta_method = "SW"</code>. However, if you have already
 had a good sense about the value of <span

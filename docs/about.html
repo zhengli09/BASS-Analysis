@@ -11,11 +11,11 @@
 
 <meta name="author" content="Zheng Li" />
 
-<meta name="date" content="2022-07-09" />
+<meta name="date" content="2023-04-02" />
 
 <title>Software tutorial</title>
 
-<script src="site_libs/header-attrs-2.12.1/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -158,11 +158,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -191,8 +195,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -200,16 +204,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -385,7 +382,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Software tutorial</h1>
 <h4 class="author">Zheng Li</h4>
-<h4 class="date">2022-07-09</h4>
+<h4 class="date">2023-04-02</h4>
 
 </div>
 
@@ -414,7 +411,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2022-07-09
+<strong>Last updated:</strong> 2023-04-02
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -545,15 +542,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree8acc73b279aea2a0a6d384e5ba3629bdd78e6aedtargetblank8acc73ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree1398286a41b9a9ae3bc2db565016a53f2f135e7dtargetblank1398286a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/zhengli09//BASS-analysis/tree/8acc73b279aea2a0a6d384e5ba3629bdd78e6aed" target="_blank">8acc73b</a>
+<a href="https://github.com/zhengli09//BASS-analysis/tree/1398286a41b9a9ae3bc2db565016a53f2f135e7d" target="_blank">1398286</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree8acc73b279aea2a0a6d384e5ba3629bdd78e6aedtargetblank8acc73ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcomzhengli09BASSanalysistree1398286a41b9a9ae3bc2db565016a53f2f135e7dtargetblank1398286a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -563,7 +560,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/zhengli09//BASS-analysis/tree/8acc73b279aea2a0a6d384e5ba3629bdd78e6aed" target="_blank">8acc73b</a>.
+<a href="https://github.com/zhengli09//BASS-analysis/tree/1398286a41b9a9ae3bc2db565016a53f2f135e7d" target="_blank">1398286</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -626,7 +623,24 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/zhengli09//BASS-analysis/blob/8acc73b279aea2a0a6d384e5ba3629bdd78e6aed/analysis/about.Rmd" target="_blank">8acc73b</a>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/1398286a41b9a9ae3bc2db565016a53f2f135e7d/analysis/about.Rmd" target="_blank">1398286</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2023-04-02
+</td>
+<td>
+Note on applying BASS to datasets with large N
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/zhengli09//BASS-analysis/blob/42a20dad9fd58c561fe982f81d160a0cb9b89951/analysis/about.Rmd" target="_blank">42a20da</a>
 </td>
 <td>
 zhengli09
@@ -635,7 +649,24 @@ zhengli09
 2022-07-09
 </td>
 <td>
-Update introduction page
+Update tutorial page
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/zhengli09//BASS-analysis/7be557869312cd98247eaae04d741c575cde8c39/docs/about.html" target="_blank">7be5578</a>
+</td>
+<td>
+zhengli09
+</td>
+<td>
+2022-07-09
+</td>
+<td>
+Build site.
 </td>
 </tr>
 <tr>
@@ -1000,6 +1031,15 @@ posterior samples without adjusting for label switching. Such approach
 can help improve the computational efficiency and the resulting
 estimates are reasonably good.</p>
 <pre class="r"><code>BASS &lt;- BASS.postprocess(BASS)</code></pre>
+</div>
+<div id="note-on-applying-bass-to-datasets-with-large-n-100k"
+class="section level2">
+<h2>Note on applying BASS to datasets with large N (~100k)</h2>
+<p>To reduce the potential computational burden, we recommend setting
+the <code>beta_method</code> to be <code>fix</code> for running the BASS
+algorithm and setting <code>adjustLS = FALSE</code> during
+post-processing. This should allow BASS to be finished within a
+reasonable amount of time.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1009,9 +1049,9 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.2.0 (2022-04-22)
+<pre><code>R version 4.2.3 (2023-03-15)
 Platform: x86_64-pc-linux-gnu (64-bit)
-Running under: Ubuntu 18.04.5 LTS
+Running under: Ubuntu 18.04.6 LTS
 
 Matrix products: default
 BLAS:   /usr/lib/x86_64-linux-gnu/openblas/libblas.so.3
@@ -1029,21 +1069,20 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] BASS_1.1.0      GIGrvg_0.5      workflowr_1.7.0
+[1] BASS_1.1.0.016  GIGrvg_0.7      workflowr_1.7.0
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8.3     bslib_0.3.1      compiler_4.2.0   pillar_1.7.0    
- [5] later_1.1.0.1    git2r_0.28.0     jquerylib_0.1.4  tools_4.2.0     
- [9] getPass_0.2-2    mclust_5.4.9     digest_0.6.29    jsonlite_1.8.0  
-[13] evaluate_0.15    tibble_3.1.6     lifecycle_1.0.1  pkgconfig_2.0.3 
-[17] rlang_1.0.1      cli_3.2.0        rstudioapi_0.13  yaml_2.3.5      
-[21] xfun_0.29        fastmap_1.1.0    httr_1.4.2       stringr_1.4.0   
-[25] knitr_1.37       sass_0.4.1       fs_1.5.2         vctrs_0.3.8     
-[29] rprojroot_2.0.2  glue_1.6.2       R6_2.5.1         processx_3.5.2  
-[33] fansi_1.0.2      rmarkdown_2.12.1 callr_3.7.0      magrittr_2.0.2  
-[37] whisker_0.4      ps_1.6.0         promises_1.1.1   htmltools_0.5.2 
-[41] ellipsis_0.3.2   httpuv_1.5.4     utf8_1.2.2       stringi_1.7.6   
-[45] crayon_1.5.0    </code></pre>
+ [1] Rcpp_1.0.10      compiler_4.2.3   pillar_1.8.1     bslib_0.3.1     
+ [5] later_1.3.0      git2r_0.31.0     jquerylib_0.1.4  tools_4.2.3     
+ [9] getPass_0.2-2    mclust_6.0.0     digest_0.6.31    jsonlite_1.8.4  
+[13] evaluate_0.20    lifecycle_1.0.3  tibble_3.2.0     pkgconfig_2.0.3 
+[17] rlang_1.1.0      cli_3.6.0        rstudioapi_0.14  yaml_2.3.7      
+[21] xfun_0.38        fastmap_1.1.1    httr_1.4.5       stringr_1.5.0   
+[25] knitr_1.37       fs_1.6.1         vctrs_0.5.2      sass_0.4.5      
+[29] rprojroot_2.0.3  glue_1.6.2       R6_2.5.1         processx_3.8.0  
+[33] fansi_1.0.4      rmarkdown_2.20   callr_3.7.3      magrittr_2.0.3  
+[37] whisker_0.4.1    ps_1.7.2         promises_1.2.0.1 htmltools_0.5.2 
+[41] httpuv_1.6.9     utf8_1.2.3       stringi_1.7.12  </code></pre>
 </div>
 </div>
 </div>

@@ -140,3 +140,8 @@ estimates are reasonably good.
 BASS <- BASS.postprocess(BASS)
 ```
 
+## Note on applying BASS to datasets with large N (~100k)
+To reduce the potential computational burden, we recommend setting the 
+`beta_method` to be `fix` for running the BASS algorithm and setting
+`adjustLS = FALSE` during post-processing. This should allow BASS to be
+finished within a reasonable amount of time.
